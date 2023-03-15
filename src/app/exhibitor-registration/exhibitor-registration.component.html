@@ -1,0 +1,966 @@
+<mat-toolbar class="toolbar">
+    <img class="toolbar-logo img-thumbnail" style="border-radius: 0 !important;" src="../../assets/BWA_Logo_horizontal.png" width="172" height="54">
+    <span class="example-spacer"></span>
+    <span>EXHIBITOR REGISTRATION FORM</span>
+    <span class="example-spacer"></span>
+</mat-toolbar>
+<!-- <div class="toolbar">
+        <span>EXHIBITOR REGISTRATION FORM</span>
+    </div> -->
+
+<!-- <div class="row mx-auto">
+    <div class="col-12">
+        <lib-ngx-image-zoom
+        zoomMode="hover"    
+        [magnification]=0.4
+        [lensWidth]=250
+        [lensHeight]=150
+        [enableLens]=true
+        [thumbImage]="image"
+        [fullImage]="image"
+        ></lib-ngx-image-zoom>
+    </div>
+</div> -->
+
+
+<!-- <div class="example-button-row d-flex justify-content-end">
+    
+    <button mat-raised-button color="primary" class="zoom-in">Zoom In</button>&nbsp;&nbsp;
+    <button mat-raised-button color="primary" class="zoom-out">Zoom Out</button>&nbsp;
+    <input type="range" class="zoom-range">&nbsp;
+    <button mat-raised-button color="primary" class="reset">Reset</button>
+
+</div> -->
+
+<div class="col-12" style="background-color: white;">
+    <!-- <div class="card shadow rounded mb-2">
+      <img src="../../../assets/BI_stalls on grid-01.svg">
+    </div> -->
+
+
+  <!-- <div id="panzoom" style="text-align: center; background-color: white;">
+
+    <object #svg_object id="svg-object-registration" data="../../../../assets/BI22 Latest Exhibition Floor plan_Revised_21.3.22 (1) 1.svg" width="100%" height="100%"></object>
+  </div> -->
+
+  <!-- <div class="example-button-row d-flex justify-content-end">
+    
+    <button   class="btn zoom-in py-2 justify-content-center align-items-center" style="position: absolute; bottom: 10px; background-color:#0DADF1; color: white;">
+      <i class='bx bx-zoom-in' style="font-size:x-large; "></i>
+    </button>&nbsp;&nbsp;
+    <button  class="btn zoom-out py-2 justify-content-center align-items-center"  style="position: absolute; bottom: 80px; background-color:#0DADF1; color: white;">
+      <i class='bx bx-zoom-out' style="font-size:x-large; "></i>
+    </button>&nbsp;
+    <input type="range" class="zoom-range">&nbsp;
+    <button   class="btn reset py-2 justify-content-center align-items-center" style="position: absolute; bottom: 150px; background-color:#0DADF1; color: white;">
+      <i class='bx bx-reset' style="font-size:x-large;"></i>
+    </button>
+  
+  </div> -->
+  <!-- <div class="py-5 d-flex justify-content-center bg-white  text-primary" style="z-index: 100px;">
+    <div id="description" class="description text-uppercase fs-1 fw-bold" style="font-size: 30px;"></div>
+  </div> -->
+
+  </div>
+  <div class="p-5 d-flex justify-content-center bg-white text-primary" style="z-index: 100px; text-align: center;">
+    <div id="description" class="description text-uppercase fs-1 fw-bold" style="font-size: 20px; line-height: 33px;"></div>
+</div>
+
+    
+<div class="container">
+    <!-- <img class="img-fluid" src="../../assets/BI22-Latest-Exhibition-Floor-plan_31.1.22.png"> -->
+    <form class="main pt-2 pb-2" [formGroup]="exhibitorForm" (ngSubmit)="openTremsConditions()">
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+        <div class="row">
+            <div class="col-sm-4" style="padding-top: 35px;">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Name</mat-label>
+                    <input 
+                    type="text" 
+                    matInput 
+                    required 
+                    formControlName="company_repName"
+                    (input)="alphaOnly($event)" 
+                    (keypress)="alphaOnly($event)"
+                    (paste)="alphaOnly($event)" >
+                    <mat-error
+                        *ngIf="exhibitorForm.controls['company_repName']?.hasError('hasNumber')">
+                        Name cannot contain numbers or special character
+                    </mat-error>
+                    <mat-error
+                        *ngIf="submited && exhibitorForm.touched && exhibitorForm.controls['company_repName']?.hasError('required') && isAlphaKey(exhibitorForm.controls['company_repName'])">
+                        Please
+                        provide a valid
+                        Name
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="text-right">
+                    <button [disabled]="emailVerified || !exhibitorForm.get('email')?.valid"
+                     type="button" mat-raised-button color="primary" (click)="sendOTP('email')">Verify</button>
+                </div>
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Email Address</mat-label>
+                    <input type="email" matInput required formControlName="email"
+                    [attr.disabled]="emailVerified"
+                    (change)="checkEmail($event, exhibitorForm.controls['email'])">
+                    <mat-error *ngIf="exhibitorForm.controls['email']?.hasError('required')">Please provide a email address
+                    </mat-error>
+                    <mat-error *ngIf="exhibitorForm.controls['email']?.hasError('isUnique')">This email id is already registered.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="text-right">
+                    <button [disabled]="numberVerified || !exhibitorForm.get('mobile_no')?.valid"
+                     type="button" mat-raised-button color="primary" (click)="sendOTP('number')">Verify</button>
+                </div>
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Mobile Number *</mat-label>
+                    <ngx-mat-intl-tel-input 
+                    formControlName="mobile_no" 
+                    [preferredCountries]="['in']"
+                    [enablePlaceholder]="true" 
+                    [enableSearch]="true" 
+                    name="phone" 
+                    #phone
+                    (countryChanged)="countrySelected($event)"
+                    (change)="checkMobile($event, exhibitorForm.controls['mobile_no'])">
+                    </ngx-mat-intl-tel-input>
+                    <mat-error *ngIf="exhibitorForm.controls['mobile_no']?.hasError('required')">Please provide a mobile number
+                    </mat-error>
+                    <mat-error *ngIf="exhibitorForm.controls['mobile_no']?.hasError('isUnique')">This mobile number is already registered.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Is this your WhatsApp Number?</mat-label>
+                    <mat-select formControlName="exhibitor_whatsapp_no_check" (selectionChange)="onSelectWhatsappNumber($event)">
+                        <mat-option value="true">Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    
+                    </mat-select>
+                    <!-- <mat-error *ngIf="exhibitorForm.controls['exhibited_before']?.hasError('required')">Please provide a
+                        Is this your WhatsApp number ?
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>WhatsApp</mat-label>
+                    <!-- <input type="text" matInput formControlName="exhibitor_whatsapp_no" [readonly]="wtspNo" > -->
+
+                    <ngx-mat-intl-tel-input 
+                    formControlName="exhibitor_whatsapp_no" 
+                    [preferredCountries]="['in']"
+                    [enablePlaceholder]="true" 
+                    [enableSearch]="true" 
+                    name="phone" 
+                    #phone>
+                    </ngx-mat-intl-tel-input>
+                    <!-- <mat-error
+                        *ngIf="submited && exhibitorForm.touched && exhibitorForm.controls['exhibitor_whatsapp_no']?.hasError('required')">
+                        Please
+                        provide a valid
+                        WhatsApp number
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Did your company exhibit at BOILER INDIA 2022 ?</mat-label>
+                    <mat-select formControlName="exhibited_before">
+                        <mat-option value="true">Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    
+                    </mat-select>
+                    <mat-error *ngIf="exhibitorForm.controls['exhibited_before']?.hasError('required')">Please provide a
+                        Did your company exhibit at BOILER INDIA 2022 ?
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Designation</mat-label>
+                    <input type="text" matInput required formControlName="designation"
+                    (input)="alphaOnly($event)" 
+                    (keypress)="alphaOnly($event)"
+                    (paste)="alphaOnly($event)">
+                    <mat-error
+                        *ngIf="exhibitorForm.controls['designation']?.hasError('hasNumber')">
+                        Name cannot contain numbers or special character
+                    </mat-error>
+                    <mat-error *ngIf="exhibitorForm.controls['designation']?.hasError('required')">Please provide a
+                        Designation
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Company *</mat-label>
+                    <input type="text" matInput  formControlName="company_name">
+                    <mat-error *ngIf="exhibitorForm.controls['company_name']?.hasError('required')">Please provide a
+                        Company
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Company Website *</mat-label>
+                    <input type="text" matInput  formControlName="company_website">
+                    <mat-error *ngIf="exhibitorForm.controls['company_website']?.hasError('required')">Please provide a
+                        Company Website
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <!-- Address Line 1 -->
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Address Line 1</mat-label>
+                    <input type="text" matInput required formControlName="address_line1">
+                    <mat-error *ngIf="exhibitorForm.controls['address_line1']?.hasError('required')">Please provide a
+                        Address Line 1
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+               <!-- Address Line 2 -->
+               <mat-form-field class="w-100" appearance="outline" color="primary">
+                <mat-label>Address Line 2</mat-label>
+                <input type="text" matInput required formControlName="address_line2">
+                <mat-error *ngIf="exhibitorForm.controls['address_line2']?.hasError('required')">Please provide a
+                    Address Line 2
+                </mat-error>
+            </mat-form-field>
+            </div>
+       
+            <div class="col-sm-4">
+                <!-- City -->
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>City</mat-label>
+                    <input type="text" matInput required formControlName="city">
+                    <mat-error *ngIf="exhibitorForm.controls['city']?.hasError('required')">Please provide a
+                        City
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <!-- State -->
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>State</mat-label>
+                    <input type="text" matInput required formControlName="state">
+                    <mat-error *ngIf="exhibitorForm.controls['state']?.hasError('required')">Please provide a
+                        State
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Country</mat-label>
+                    <mat-select #country formControlName="country" id="country">
+                        <mat-option value="">Select Country</mat-option>
+                        <mat-option value="Afghanistan">Afghanistan</mat-option>
+                        <mat-option value="Åland Islands">Åland Islands</mat-option>
+                        <mat-option value="Albania">Albania</mat-option>
+                        <mat-option value="Algeria">Algeria</mat-option>
+                        <mat-option value="American Samoa">American Samoa</mat-option>
+                        <mat-option value="Andorra">Andorra</mat-option>
+                        <mat-option value="Angola">Angola</mat-option>
+                        <mat-option value="Anguilla">Anguilla</mat-option>
+                        <mat-option value="Antarctica">Antarctica</mat-option>
+                        <mat-option value="Antigua and Barbuda">Antigua and Barbuda</mat-option>
+                        <mat-option value="Argentina">Argentina</mat-option>
+                        <mat-option value="Armenia">Armenia</mat-option>
+                        <mat-option value="Aruba">Aruba</mat-option>
+                        <mat-option value="Australia">Australia</mat-option>
+                        <mat-option value="Austria">Austria</mat-option>
+                        <mat-option value="Azerbaijan">Azerbaijan</mat-option>
+                        <mat-option value="Bahamas">Bahamas</mat-option>
+                        <mat-option value="Bahrain">Bahrain</mat-option>
+                        <mat-option value="Bangladesh">Bangladesh</mat-option>
+                        <mat-option value="Barbados">Barbados</mat-option>
+                        <mat-option value="Belarus">Belarus</mat-option>
+                        <mat-option value="Belgium">Belgium</mat-option>
+                        <mat-option value="Belize">Belize</mat-option>
+                        <mat-option value="Benin">Benin</mat-option>
+                        <mat-option value="Bermuda">Bermuda</mat-option>
+                        <mat-option value="Bhutan">Bhutan</mat-option>
+                        <mat-option value="Bolivia">Bolivia</mat-option>
+                        <mat-option value="Bonaire, Sint Eustatius and Saba">Bonaire, Sint Eustatius and Saba
+                        </mat-option>
+                        <mat-option value="Bosnia and Herzegovina">Bosnia and Herzegovina</mat-option>
+                        <mat-option value="Botswana">Botswana</mat-option>
+                        <mat-option value="Bouvet Island">Bouvet Island</mat-option>
+                        <mat-option value="Brazil">Brazil</mat-option>
+                        <mat-option value="British Indian Ocean Territory">British Indian Ocean Territory
+                        </mat-option>
+                        <mat-option value="Brunei Darussalam">Brunei Darussalam</mat-option>
+                        <mat-option value="Bulgaria">Bulgaria</mat-option>
+                        <mat-option value="Burkina Faso">Burkina Faso</mat-option>
+                        <mat-option value="Burundi">Burundi</mat-option>
+                        <mat-option value="Cambodia">Cambodia</mat-option>
+                        <mat-option value="Cameroon">Cameroon</mat-option>
+                        <mat-option value="Canada">Canada</mat-option>
+                        <mat-option value="Cape Verde">Cape Verde</mat-option>
+                        <mat-option value="Cayman Islands">Cayman Islands</mat-option>
+                        <mat-option value="Central African Republic">Central African Republic</mat-option>
+                        <mat-option value="Chad">Chad</mat-option>
+                        <mat-option value="Chile">Chile</mat-option>
+                        <mat-option value="China">China</mat-option>
+                        <mat-option value="Christmas Island">Christmas Island</mat-option>
+                        <mat-option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</mat-option>
+                        <mat-option value="Colombia">Colombia</mat-option>
+                        <mat-option value="Comoros">Comoros</mat-option>
+                        <mat-option value="Congo, Republic of the (Brazzaville)">Congo, Republic of the
+                            (Brazzaville)
+                        </mat-option>
+                        <mat-option value="Congo, the Democratic Republic of the (Kinshasa)">Congo, the Democratic
+                            Republic of the (Kinshasa)</mat-option>
+                        <mat-option value="Cook Islands">Cook Islands</mat-option>
+                        <mat-option value="Costa Rica">Costa Rica</mat-option>
+                        <mat-option value="Côte d'Ivoire, Republic of">Côte d'Ivoire, Republic of</mat-option>
+                        <mat-option value="Croatia">Croatia</mat-option>
+                        <mat-option value="Cuba">Cuba</mat-option>
+                        <mat-option value="Curaçao">Curaçao</mat-option>
+                        <mat-option value="Cyprus">Cyprus</mat-option>
+                        <mat-option value="Czech Republic">Czech Republic</mat-option>
+                        <mat-option value="Denmark">Denmark</mat-option>
+                        <mat-option value="Djibouti">Djibouti</mat-option>
+                        <mat-option value="Dominica">Dominica</mat-option>
+                        <mat-option value="Dominican Republic">Dominican Republic</mat-option>
+                        <mat-option value="Ecuador">Ecuador</mat-option>
+                        <mat-option value="Egypt">Egypt</mat-option>
+                        <mat-option value="El Salvador">El Salvador</mat-option>
+                        <mat-option value="Equatorial Guinea">Equatorial Guinea</mat-option>
+                        <mat-option value="Eritrea">Eritrea</mat-option>
+                        <mat-option value="Estonia">Estonia</mat-option>
+                        <mat-option value="Ethiopia">Ethiopia</mat-option>
+                        <mat-option value="Falkland Islands (Islas Malvinas)">Falkland Islands (Islas Malvinas)
+                        </mat-option>
+                        <mat-option value="Faroe Islands">Faroe Islands</mat-option>
+                        <mat-option value="Fiji">Fiji</mat-option>
+                        <mat-option value="Finland">Finland</mat-option>
+                        <mat-option value="France">France</mat-option>
+                        <mat-option value="French Guiana">French Guiana</mat-option>
+                        <mat-option value="French Polynesia">French Polynesia</mat-option>
+                        <mat-option value="French Southern and Antarctic Lands">French Southern and Antarctic Lands
+                        </mat-option>
+                        <mat-option value="Gabon">Gabon</mat-option>
+                        <mat-option value="Gambia, The">Gambia, The</mat-option>
+                        <mat-option value="Georgia">Georgia</mat-option>
+                        <mat-option value="Germany">Germany</mat-option>
+                        <mat-option value="Ghana">Ghana</mat-option>
+                        <mat-option value="Gibraltar">Gibraltar</mat-option>
+                        <mat-option value="Greece">Greece</mat-option>
+                        <mat-option value="Greenland">Greenland</mat-option>
+                        <mat-option value="Grenada">Grenada</mat-option>
+                        <mat-option value="Guadeloupe">Guadeloupe</mat-option>
+                        <mat-option value="Guam">Guam</mat-option>
+                        <mat-option value="Guatemala">Guatemala</mat-option>
+                        <mat-option value="Guernsey">Guernsey</mat-option>
+                        <mat-option value="Guinea">Guinea</mat-option>
+                        <mat-option value="Guinea-Bissau">Guinea-Bissau</mat-option>
+                        <mat-option value="Guyana">Guyana</mat-option>
+                        <mat-option value="Haiti">Haiti</mat-option>
+                        <mat-option value="Heard Island and McDonald Islands">Heard Island and McDonald Islands
+                        </mat-option>
+                        <mat-option value="Holy See (Vatican City)">Holy See (Vatican City)</mat-option>
+                        <mat-option value="Honduras">Honduras</mat-option>
+                        <mat-option value="Hong Kong">Hong Kong</mat-option>
+                        <mat-option value="Hungary">Hungary</mat-option>
+                        <mat-option value="Iceland">Iceland</mat-option>
+                        <mat-option selected="" value="India">India</mat-option>
+                        <mat-option value="Indonesia">Indonesia</mat-option>
+                        <mat-option value="Iran, Islamic Republic of">Iran, Islamic Republic of</mat-option>
+                        <mat-option value="Iraq">Iraq</mat-option>
+                        <mat-option value="Ireland">Ireland</mat-option>
+                        <mat-option value="Isle of Man">Isle of Man</mat-option>
+                        <mat-option value="Israel">Israel</mat-option>
+                        <mat-option value="Italy">Italy</mat-option>
+                        <mat-option value="Jamaica">Jamaica</mat-option>
+                        <mat-option value="Japan">Japan</mat-option>
+                        <mat-option value="Jersey">Jersey</mat-option>
+                        <mat-option value="Jordan">Jordan</mat-option>
+                        <mat-option value="Kazakhstan">Kazakhstan</mat-option>
+                        <mat-option value="Kenya">Kenya</mat-option>
+                        <mat-option value="Kiribati">Kiribati</mat-option>
+                        <mat-option value="Korea, Democratic People's Republic of">Korea, Democratic People's
+                            Republic
+                            of</mat-option>
+                        <mat-option value="Korea, Republic of">Korea, Republic of</mat-option>
+                        <mat-option value="Kosovo">Kosovo</mat-option>
+                        <mat-option value="Kuwait">Kuwait</mat-option>
+                        <mat-option value="Kyrgyzstan">Kyrgyzstan</mat-option>
+                        <mat-option value="Laos">Laos</mat-option>
+                        <mat-option value="Latvia">Latvia</mat-option>
+                        <mat-option value="Lebanon">Lebanon</mat-option>
+                        <mat-option value="Lesotho">Lesotho</mat-option>
+                        <mat-option value="Liberia">Liberia</mat-option>
+                        <mat-option value="Libya">Libya</mat-option>
+                        <mat-option value="Liechtenstein">Liechtenstein</mat-option>
+                        <mat-option value="Lithuania">Lithuania</mat-option>
+                        <mat-option value="Luxembourg">Luxembourg</mat-option>
+                        <mat-option value="Macao">Macao</mat-option>
+                        <mat-option value="Macedonia, Republic of">Macedonia, Republic of</mat-option>
+                        <mat-option value="Madagascar">Madagascar</mat-option>
+                        <mat-option value="Malawi">Malawi</mat-option>
+                        <mat-option value="Malaysia">Malaysia</mat-option>
+                        <mat-option value="Maldives">Maldives</mat-option>
+                        <mat-option value="Mali">Mali</mat-option>
+                        <mat-option value="Malta">Malta</mat-option>
+                        <mat-option value="Marshall Islands">Marshall Islands</mat-option>
+                        <mat-option value="Martinique">Martinique</mat-option>
+                        <mat-option value="Mauritania">Mauritania</mat-option>
+                        <mat-option value="Mauritius">Mauritius</mat-option>
+                        <mat-option value="Mayotte">Mayotte</mat-option>
+                        <mat-option value="Mexico">Mexico</mat-option>
+                        <mat-option value="Micronesia, Federated States of">Micronesia, Federated States of
+                        </mat-option>
+                        <mat-option value="Moldova">Moldova</mat-option>
+                        <mat-option value="Monaco">Monaco</mat-option>
+                        <mat-option value="Mongolia">Mongolia</mat-option>
+                        <mat-option value="Montenegro">Montenegro</mat-option>
+                        <mat-option value="Montserrat">Montserrat</mat-option>
+                        <mat-option value="Morocco">Morocco</mat-option>
+                        <mat-option value="Mozambique">Mozambique</mat-option>
+                        <mat-option value="Myanmar">Myanmar</mat-option>
+                        <mat-option value="Namibia">Namibia</mat-option>
+                        <mat-option value="Nauru">Nauru</mat-option>
+                        <mat-option value="Nepal">Nepal</mat-option>
+                        <mat-option value="Netherlands">Netherlands</mat-option>
+                        <mat-option value="New Caledonia">New Caledonia</mat-option>
+                        <mat-option value="New Zealand">New Zealand</mat-option>
+                        <mat-option value="Nicaragua">Nicaragua</mat-option>
+                        <mat-option value="Niger">Niger</mat-option>
+                        <mat-option value="Nigeria">Nigeria</mat-option>
+                        <mat-option value="Niue">Niue</mat-option>
+                        <mat-option value="Norfolk Island">Norfolk Island</mat-option>
+                        <mat-option value="Northern Mariana Islands">Northern Mariana Islands</mat-option>
+                        <mat-option value="Norway">Norway</mat-option>
+                        <mat-option value="Oman">Oman</mat-option>
+                        <mat-option value="Pakistan">Pakistan</mat-option>
+                        <mat-option value="Palau">Palau</mat-option>
+                        <mat-option value="Palestine, State of">Palestine, State of</mat-option>
+                        <mat-option value="Panama">Panama</mat-option>
+                        <mat-option value="Papua New Guinea">Papua New Guinea</mat-option>
+                        <mat-option value="Paraguay">Paraguay</mat-option>
+                        <mat-option value="Peru">Peru</mat-option>
+                        <mat-option value="Philippines">Philippines</mat-option>
+                        <mat-option value="Pitcairn">Pitcairn</mat-option>
+                        <mat-option value="Poland">Poland</mat-option>
+                        <mat-option value="Portugal">Portugal</mat-option>
+                        <mat-option value="Puerto Rico">Puerto Rico</mat-option>
+                        <mat-option value="Qatar">Qatar</mat-option>
+                        <mat-option value="Réunion">Réunion</mat-option>
+                        <mat-option value="Romania">Romania</mat-option>
+                        <mat-option value="Russian Federation">Russian Federation</mat-option>
+                        <mat-option value="Rwanda">Rwanda</mat-option>
+                        <mat-option value="Saint Barthélemy">Saint Barthélemy</mat-option>
+                        <mat-option value="Saint Helena, Ascension and Tristan da Cunha">Saint Helena, Ascension and
+                            Tristan da Cunha</mat-option>
+                        <mat-option value="Saint Kitts and Nevis">Saint Kitts and Nevis</mat-option>
+                        <mat-option value="Saint Lucia">Saint Lucia</mat-option>
+                        <mat-option value="Saint Martin">Saint Martin</mat-option>
+                        <mat-option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</mat-option>
+                        <mat-option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines
+                        </mat-option>
+                        <mat-option value="Samoa">Samoa</mat-option>
+                        <mat-option value="San Marino">San Marino</mat-option>
+                        <mat-option value="Sao Tome and Principe">Sao Tome and Principe</mat-option>
+                        <mat-option value="Saudi Arabia">Saudi Arabia</mat-option>
+                        <mat-option value="Senegal">Senegal</mat-option>
+                        <mat-option value="Serbia">Serbia</mat-option>
+                        <mat-option value="Seychelles">Seychelles</mat-option>
+                        <mat-option value="Sierra Leone">Sierra Leone</mat-option>
+                        <mat-option value="Singapore">Singapore</mat-option>
+                        <mat-option value="Sint Maarten (Dutch part)">Sint Maarten (Dutch part)</mat-option>
+                        <mat-option value="Slovakia">Slovakia</mat-option>
+                        <mat-option value="Slovenia">Slovenia</mat-option>
+                        <mat-option value="Solomon Islands">Solomon Islands</mat-option>
+                        <mat-option value="Somalia">Somalia</mat-option>
+                        <mat-option value="South Africa">South Africa</mat-option>
+                        <mat-option value="South Georgia and South Sandwich Islands">South Georgia and South
+                            Sandwich
+                            Islands</mat-option>
+                        <mat-option value="South Sudan">South Sudan</mat-option>
+                        <mat-option value="Spain">Spain</mat-option>
+                        <mat-option value="Sri Lanka">Sri Lanka</mat-option>
+                        <mat-option value="Sudan">Sudan</mat-option>
+                        <mat-option value="Suriname">Suriname</mat-option>
+                        <mat-option value="Swaziland">Swaziland</mat-option>
+                        <mat-option value="Sweden">Sweden</mat-option>
+                        <mat-option value="Switzerland">Switzerland</mat-option>
+                        <mat-option value="Syrian Arab Republic">Syrian Arab Republic</mat-option>
+                        <mat-option value="Taiwan">Taiwan</mat-option>
+                        <mat-option value="Tajikistan">Tajikistan</mat-option>
+                        <mat-option value="Tanzania, United Republic of">Tanzania, United Republic of</mat-option>
+                        <mat-option value="Thailand">Thailand</mat-option>
+                        <mat-option value="Timor-Leste">Timor-Leste</mat-option>
+                        <mat-option value="Togo">Togo</mat-option>
+                        <mat-option value="Tokelau">Tokelau</mat-option>
+                        <mat-option value="Tonga">Tonga</mat-option>
+                        <mat-option value="Trinidad and Tobago">Trinidad and Tobago</mat-option>
+                        <mat-option value="Tunisia">Tunisia</mat-option>
+                        <mat-option value="Turkey">Turkey</mat-option>
+                        <mat-option value="Turkmenistan">Turkmenistan</mat-option>
+                        <mat-option value="Turks and Caicos Islands">Turks and Caicos Islands</mat-option>
+                        <mat-option value="Tuvalu">Tuvalu</mat-option>
+                        <mat-option value="Uganda">Uganda</mat-option>
+                        <mat-option value="Ukraine">Ukraine</mat-option>
+                        <mat-option value="United Arab Emirates">United Arab Emirates</mat-option>
+                        <mat-option value="United Kingdom">United Kingdom</mat-option>
+                        <mat-option value="United States">United States</mat-option>
+                        <mat-option value="United States Minor Outlying Islands">United States Minor Outlying
+                            Islands
+                        </mat-option>
+                        <mat-option value="Uruguay">Uruguay</mat-option>
+                        <mat-option value="Uzbekistan">Uzbekistan</mat-option>
+                        <mat-option value="Vanuatu">Vanuatu</mat-option>
+                        <mat-option value="Venezuela, Bolivarian Republic of">Venezuela, Bolivarian Republic of
+                        </mat-option>
+                        <mat-option value="Vietnam">Vietnam</mat-option>
+                        <mat-option value="Virgin Islands, British">Virgin Islands, British</mat-option>
+                        <mat-option value="Virgin Islands, U.S.">Virgin Islands, U.S.</mat-option>
+                        <mat-option value="Wallis and Futuna">Wallis and Futuna</mat-option>
+                        <mat-option value="Western Sahara">Western Sahara</mat-option>
+                        <mat-option value="Yemen">Yemen</mat-option>
+                        <mat-option value="Zambia">Zambia</mat-option>
+                        <mat-option value="Zimbabwe">Zimbabwe</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="exhibitorForm.controls['country']?.hasError('required')">Please provide a
+                        Country
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <!-- Pincode -->
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                 <mat-label>Pincode</mat-label>
+                 <input type="text" matInput required formControlName="address_pin">
+                 <mat-error *ngIf="exhibitorForm.controls['address_pin']?.hasError('required')">Please provide a
+                     Pincode
+                 </mat-error>
+             </mat-form-field>
+             </div>
+            
+
+
+            <div class="col-sm-4" *ngIf="exhibitorForm.value.country == 'India'">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Is your company an MSME?</mat-label>
+                    <mat-select formControlName="is_msme">
+                        <mat-option value="true">Yes</mat-option>
+                        <mat-option value="false">No</mat-option>
+                    
+                    </mat-select>
+                    <!-- <mat-error *ngIf="exhibitorForm.controls['is_msme']?.hasError('required')">Please provide a
+                        MSME ?
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4" *ngIf="exhibitorForm.value.is_msme == 'true'">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>MSME</mat-label>
+                    <mat-select formControlName="msme_type" >
+                        <mat-option value="micro">Micro</mat-option>
+                        <mat-option value="small">Small</mat-option>
+                        <mat-option value="medium">Medium</mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="exhibitorForm.controls['is_msme']?.hasError('required')">Please provide a
+                        MSME ?
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Manufacturer</mat-label>
+                    <mat-select  required multiple (selectionChange)="chnage_proCategory($event)"  formControlName="pro_category">
+                        <mat-option value="manufacturer" >Manufacturer</mat-option>
+                        <mat-option value="authorised_dealer">Authorised Dealer</mat-option>
+                        <mat-option value="distributor">Distributor</mat-option>
+                        <mat-option value="service_provider">Service Provider</mat-option>
+                        <mat-option  value="other" [disabled]>Other, please specify</mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="exhibitorForm.controls['pro_category']?.hasError('required')">Please provide a Category
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-12 col-sm-4" *ngIf="exhibitorForm.value.pro_category == 'other'">
+                <mat-form-field class="w-100" appearance="outline" 
+                color="primary"   >
+                    <mat-label>Manufacturer Other</mat-label>
+                    <input type="text" matInput 
+                    formControlName="category_other_field">
+                    <mat-error *ngIf="exhibitorForm.controls['category_other_field']?.hasError('required')" >
+                        Please
+                        provide a valid
+                        Manufacturer Other
+                    </mat-error>
+                </mat-form-field>
+            </div>     
+
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Boilers & boiler accessories</mat-label>
+                    <mat-select  (selectionChange)="chnage_ProductsCategory($event)" required multiple formControlName="exhibitor_products">
+                        <mat-option class="mat-option-overflow" value="Boilers_boiler_accessories">Boilers &amp; boiler accessories</mat-option>
+                        <mat-option class="mat-option-overflow" value="turbines">Turbines</mat-option>
+                        <mat-option class="mat-option-overflow" value="Burners_burner_spare_parts_combustion_burner_control_products">Burners, burner spare parts, combustion &amp; burner control products</mat-option>
+                        <mat-option class="mat-option-overflow" value="Thermic_fluid_heaters_hot_air_gas_generators_steam_coil_air_preheaters">Thermic fluid heaters, hot air/gas generators, steam coil air preheaters</mat-option>
+                        <mat-option class="mat-option-overflow" value="Direct_steam_suppliers">Direct steam suppliers</mat-option>
+                        <mat-option class="mat-option-overflow" value="Pipes_stainless_steel_flanged_galvanised_black_steel_seamless_hose_pipes">Pipes: stainless steel, flanged, galvanised, black steel, seamless, hose pipes</mat-option>
+                        <mat-option class="mat-option-overflow" value="Industrial_metal_and_steel_pipe_fittings_and_flanges">Industrial metal and steel pipe fittings and flanges</mat-option>
+                        <mat-option class="mat-option-overflow" value="Valves_pneumatic_valves_hydraulic_valves_industrial_valves_and_valve_fittings">Valves: pneumatic valves, hydraulic valves, industrial valves and valve fittings</mat-option>
+                        <mat-option class="mat-option-overflow" value="Submersible_pumps_centrifugal_monoblock_diesel_hydraulic_pumps_and_spares">Submersible pumps, centrifugal, monoblock, diesel, hydraulic pumps and spares</mat-option>
+                        <mat-option class="mat-option-overflow" value="Heat_resistant_material_refractories_etc">Heat resistant material, refractories, etc.</mat-option>
+                        <mat-option class="mat-option-overflow" value="Measuring_instruments_&_equipment_pix_transmissions">Measuring instruments & equipment, pix transmissions</mat-option>
+                        <mat-option class="mat-option-overflow" value="Industrial_air_blowers_cooling_fans_exhaust_fans_ventilation_systems_and_parts">Industrial air blowers, cooling fans, exhaust fans, ventilation systems and parts</mat-option>
+                        <mat-option class="mat-option-overflow" value="Process_tanks_pressure_vessels">Process tanks, pressure vessels</mat-option>
+                        <mat-option class="mat-option-overflow" value="Cooling_towers_heat_exchangers_components_parts_&_spares">Cooling towers, heat exchangers, components, parts & spares</mat-option>
+                        <mat-option class="mat-option-overflow" value="Air_compressors_gas_compressors_&_accessories_and_compressor_parts">Air compressors, gas compressors & accessories and compressor parts</mat-option>
+                        <mat-option class="mat-option-overflow" value="Air_Pollution_control_equipment/services_electrostatic_precipitators">Air Pollution control equipment/services, electrostatic precipitators</mat-option>
+                        <mat-option class="mat-option-overflow" value="Water_treatment_purification_plant_wastewater_treatment_effluent_treatment">Water treatment, purification plant, wastewater treatment, effluent treatment</mat-option>
+                        <mat-option class="mat-option-overflow" value="Environment_protection_energy_conservation_units_&_audit_services">Environment protection, energy conservation units & audit services</mat-option>
+                        <mat-option class="mat-option-overflow" value="Material_handling_equipment">Material handling equipment</mat-option>
+                        <mat-option class="mat-option-overflow" value="Fasteners_nails_rivets_shackle_tie_rods_and_turnbuckles">Fasteners, nails, rivets, shackle, tie rods and turnbuckles</mat-option>
+                        <mat-option class="mat-option-overflow" value="Bellows_assemblies_&_supplies_suction_cups_cable_drums_industrial_fixtures">Bellows, assemblies & supplies, suction cups, cable drums, industrial fixtures</mat-option>
+                        <mat-option class="mat-option-overflow" value="Industrial_welding_&_repairs">Industrial welding & repairs</mat-option>
+                        <mat-option class="mat-option-overflow" value="Generators_generator_parts_alternators">Generators, generator parts, alternators</mat-option>
+                        <mat-option class="mat-option-overflow" value="Petroleum_refinery_products">Petroleum refinery products</mat-option>
+                        <mat-option class="mat-option-overflow" value="Casting_machines_moulding_machines_foundry_machinery_&_forging_machines_belts">Casting machines, moulding machines, foundry machinery & forging machines, belts</mat-option>
+                        <mat-option class="mat-option-overflow" value="NDT_services_and_labs">NDT services and labs</mat-option>
+                        <mat-option class="mat-option-overflow" value="Chemical_reactors_&_Refineries">Chemical reactors & Refineries</mat-option>
+                        <mat-option class="mat-option-overflow" value="Operation_and_maintenance_services">Operation and maintenance services</mat-option>
+                        <mat-option class="mat-option-overflow" value="Biomass_and_biofuel_products">Biomass and biofuel products</mat-option>
+                        <mat-option class="mat-option-overflow" value="Industrial_safety_fire_safety_&_control_equipment">Industrial safety/fire safety & control equipment</mat-option>
+                        <mat-option class="mat-option-overflow" value="Industrial_suit_wear_and_fibreglass">Industrial suit/wear and fibreglass</mat-option>
+                        <mat-option class="mat-option-overflow" value="Electrical_fire_&_other_proofing_equipment">Electrical, fire & other proofing equipment</mat-option>
+                        <mat-option class="mat-option-overflow" value="others" [disabled]>Other, please specify</mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="exhibitorForm.controls['pro_category']?.hasError('required')">Please provide a Category
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-12 col-sm-4" *ngIf="exhibitorForm.value.exhibitor_products == 'others'">
+                <mat-form-field class="w-100" appearance="outline" 
+                color="primary"   >
+                    <mat-label>Boilers & Boiler Accessories Other</mat-label>
+                    <input  formControlName="exhibitor_products_other_field" type="text" matInput >
+                    <mat-error *ngIf="exhibitorForm.controls['exhibitor_products_other_field']?.hasError('required')" >
+                        Please
+                        provide a valid
+                        Boilers & Boiler Accessories Other
+                    </mat-error>
+                </mat-form-field>
+            </div>     
+
+            <div class="col-sm-4">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput formControlName="password" required
+                    [type]="hide ? 'password': 'text'">
+                    <mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+                    <mat-error *ngIf="exhibitorForm.controls['password']?.hasError('required')">Please provide a
+                        Password
+                    </mat-error>
+                    <mat-error *ngIf="password?.errors?.minlength">Password must be min 8 char.
+                    </mat-error>
+                    <mat-error *ngIf="exhibitorForm.controls['password']?.hasError('hasNumber')">
+                        Password must include a Number
+                    </mat-error>
+                    <mat-error *ngIf="exhibitorForm.controls['password']?.hasError('hasCapitalCase')">
+                        Password must include a Uppercase
+                    </mat-error>
+                    <mat-error *ngIf="exhibitorForm.controls['password']?.hasError('hasSmallCase')">
+                        Password must include a Lower case
+                    </mat-error>
+                    <mat-error *ngIf="exhibitorForm.controls['password']?.hasError('hasSpecialCharacters')">
+                        Password must include a special character
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        
+            <div class="col-sm-4"
+                [class.mt-5]="
+                exhibitorForm.controls['password']?.hasError('hasNumber') ||
+                exhibitorForm.controls['password']?.hasError('hasCapitalCase') ||
+                exhibitorForm.controls['password']?.hasError('hasSmallCase') ||
+                exhibitorForm.controls['password']?.hasError('hasSpecialCharacters')
+                "
+                [class.mt-sm-0]="
+                exhibitorForm.controls['password']?.hasError('hasNumber') ||
+                exhibitorForm.controls['password']?.hasError('hasCapitalCase') ||
+                exhibitorForm.controls['password']?.hasError('hasSmallCase') ||
+                exhibitorForm.controls['password']?.hasError('hasSpecialCharacters')
+                ">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                    <mat-label>Confirm Password</mat-label>
+                    <input type="password" matInput formControlName="cpassword" required
+                    [type]="view ? 'password' : 'text'">
+                    <mat-icon matSuffix (click)="view = !view">{{ view ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+                    <mat-error *ngIf="exhibitorForm.controls['cpassword']?.hasError('required')">Please provide a
+                        Confirm Password
+                    </mat-error>
+                    <mat-error *ngIf="exhibitorForm.controls['cpassword']?.hasError('notEqualToPassword')">Password does
+                        not match
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-12">
+                <p style="font-weight: bold; font-size: 16px;">Contact details for coordination</p>
+            </div>
+
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 col-sm-2" >
+
+                        <p class="py-3" style="font-weight: bold;">Marketing &amp; Sales</p>
+                        
+                    </div> 
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>Name</mat-label>
+                            <input  formControlName="marketing_dept_name" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['marketing_dept_name']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                Name
+                            </mat-error>
+                        </mat-form-field>
+                    </div>   
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>WhatsApp Number</mat-label>
+                            <input  formControlName="marketing_dept_whatsapp" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['marketing_dept_whatsapp']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                WhatsApp Number
+                            </mat-error>
+                        </mat-form-field>
+                    </div>   
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>Designation</mat-label>
+                            <input  formControlName="marketing_dept_designation" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['marketing_dept_designation']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                Designation
+                            </mat-error>
+                        </mat-form-field>
+                    </div>   
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>Email ID</mat-label>
+                            <input  formControlName="marketing_dept_email" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['marketing_dept_email']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                Email ID
+                            </mat-error>
+                        </mat-form-field>
+                    </div>     
+                </div>
+            </div>
+        
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 col-sm-2" >
+
+                        <p class="py-3" style="font-weight: bold;">Accounts &amp; Finance</p>
+                        
+                    </div> 
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>Name</mat-label>
+                            <input  formControlName="accounts_dept_name" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['accounts_dept_name']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                Name
+                            </mat-error>
+                        </mat-form-field>
+                    </div>   
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>WhatsApp Number</mat-label>
+                            <input  formControlName="accounts_dept_whatsapp" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['accounts_dept_whatsapp']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                WhatsApp Number
+                            </mat-error>
+                        </mat-form-field>
+                    </div>   
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>Designation</mat-label>
+                            <input  formControlName="accounts_dept_designation" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['accounts_dept_designation']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                Designation
+                            </mat-error>
+                        </mat-form-field>
+                    </div>   
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>Email ID</mat-label>
+                            <input  formControlName="accounts_dept_email" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['accounts_dept_email']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                Email ID
+                            </mat-error>
+                        </mat-form-field>
+                    </div>     
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 col-sm-2" >
+
+                        <p class="py-3" style="font-weight: bold;">On-site event coordinator</p>
+                        
+                    </div> 
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>Name</mat-label>
+                            <input  formControlName="onsite_dept_name" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['onsite_dept_name']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                Name
+                            </mat-error>
+                        </mat-form-field>
+                    </div>   
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>WhatsApp Number</mat-label>
+                            <input  formControlName="onsite_dept_whatsapp" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['onsite_dept_whatsapp']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                WhatsApp Number
+                            </mat-error>
+                        </mat-form-field>
+                    </div>   
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>Designation</mat-label>
+                            <input  formControlName="onsite_dept_designation" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['onsite_dept_designation']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                Designation
+                            </mat-error>
+                        </mat-form-field>
+                    </div>   
+                    <div class="col-12 col-sm-auto" >
+                        <mat-form-field class="w-100" appearance="outline" 
+                        color="primary"   >
+                            <mat-label>Email ID</mat-label>
+                            <input  formControlName="onsite_dept_email" type="text" matInput >
+                            <mat-error *ngIf="exhibitorForm.controls['onsite_dept_email']?.hasError('required')" >
+                                Please
+                                provide a valid
+                                Email ID
+                            </mat-error>
+                        </mat-form-field>
+                    </div>     
+                </div>
+            </div>
+
+            <!-- <div class="col-12 d-flex justify-content-center">
+               <mat-checkbox class="mx-2" color="primary" required="">Terms &amp; Conditions </mat-checkbox>
+            </div> -->
+            
+        </div>
+        <div class="button">
+           
+            <button type="reset" [disabled]="loading" mat-button style="background-color: #C20F19; color: #FFFFFF"
+            >Reset</button>
+            <button [disabled]="loading" type="submit" mat-raised-button 
+                style="background-color: #28509D; color: #FFFFFF ; margin-left: 20px;">Register</button>
+           
+        </div>
+    </form>
+</div>
+
+
+
+
+
+<!-- OTP DIALOG -->
+<div class="otp-content" [style.display]="showOtpComponent? 'flex': 'none'">
+
+    <div style="background-color: #FFFFFF; border-radius: 10px;" class="p-5">  
+        <div class="">
+            <div style="position: relative;">
+                <a class="cls-dialog" (click)="CloseDialog()">X</a>
+            </div>
+            <h1><b>Verifying it is you!</b></h1>
+            <h4>Enter the 6-digit OTP (One Time Password)<br>
+                sent to 
+                <b>{{ this.otpSentTo }}&nbsp;
+                    <a class="chng-number" (click)="CloseDialog()">CHANGE {{this.currentOtpType.toUpperCase()}}</a></b> 
+            </h4>
+            <app-progress *ngIf="otpLoading" mode="indeterminate"></app-progress>
+            <!-- <div class="alert alert-success" *ngIf="otpMessage">
+                {{ otpMessage }}
+            </div> -->
+            <div class="alert alert-danger" *ngIf="otpErrorMessage">
+                {{ otpErrorMessage }}
+            </div>
+            <p class="a-o-i"><b>Enter OTP</b></p>
+            <ng-otp-input #ngOtpInput [(ngModel)]="numberOTP" (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+            <mat-error *ngIf="numberOTPError">{{ numberOTPError }}</mat-error>
+            <!-- <span class="o-t-p">
+                <ng-container *ngIf="otp">
+                    Entered otp :-{{otp}}
+                </ng-container>
+            </span> -->
+        </div>
+  
+        <div class="mt-4 mb-2 text-center">            
+            <button class="btn btn-contnu" (click)="verifyOtp(this.currentOtpType)" >Continue</button>
+            <h4>Didn't receive OTP? <button class="btn chng-number" (click)="reSendOTP(this.currentOtpType)" ><b>Resend OTP</b></button></h4>
+        </div>
+    </div>
+  
+  </div>

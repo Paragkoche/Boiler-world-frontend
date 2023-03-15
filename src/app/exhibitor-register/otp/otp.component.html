@@ -1,0 +1,33 @@
+<!-- <div class="otp-content"> -->
+<h2 mat-dialog-title>OTP has been sent to {{ this.data.value }}</h2>
+<app-progress *ngIf="otpLoading" mode="indeterminate"></app-progress>
+
+<div mat-dialog-content >
+    <app-progress *ngIf="loading"></app-progress>
+    <div class="alert alert-success" *ngIf="otpMessage">
+        {{ otpMessage }}
+    </div>
+    <div class="alert alert-danger" *ngIf="otpErrorMessage">
+        {{ otpErrorMessage }}
+    </div>
+    <mat-form-field class="w-100" appearance="outline" color="primary">
+        <mat-label>OTP</mat-label>
+
+        <p class="a-o-i">Enter verification code</p>
+        <ng-otp-input [(ngModel)]="numberOTP" [config]="config" (onInputChange)="onOtpChange($event)"></ng-otp-input>
+        <mat-error *ngIf="numberOTPError">{{ numberOTPError }}</mat-error>
+
+        <!-- <input type="number" matInput [(ngModel)]="numberOTP">
+        <mat-error *ngIf="numberOTPError">{{ numberOTPError }}</mat-error> -->
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="resend()">Resend</button>
+    <button mat-button cdkFocusInitial (click)="verify()">Verify</button>
+</div>
+
+
+
+
+
+<!-- </div> -->

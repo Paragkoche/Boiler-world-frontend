@@ -1,0 +1,160 @@
+<div class="background m-2">
+
+  <div *ngIf="loading" class="bg-loading position-absolute h-100 w-100 d-flex justify-content-center align-items-center" style="left: 0; top: 0; z-index: 1000;">
+    <img style="width: 100px; height: 100px;" src="../../assets/loading-buffering.gif">
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-5 col-sm-6">
+        <p>
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Search</mat-label>
+              <input matInput placeholder="Search" [(ngModel)]="query" (change)="getDataList()">
+              <button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''; getDataList();">
+                <mat-icon>close</mat-icon>
+            </button>
+              <!-- <mat-icon matSuffix>search</mat-icon> -->
+            </mat-form-field>
+          </p>
+    </div>
+    <div class="col-12 col-md-3 col-sm-6">
+       
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Select Order</mat-label>
+                <mat-select [(ngModel)]="order" (selectionChange)="page = 0; getDataList()">
+                    <mat-option value="asc">Asc</mat-option>
+                    <mat-option value="desc">Desc</mat-option>
+                </mat-select>
+              </mat-form-field>
+     
+    </div>
+    <div class="col-12 col-md-3 col-sm-6">
+        <p>
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Select Status</mat-label>
+                <mat-select [(ngModel)]="status" (selectionChange)="page = 0; getDataList()">
+                    <mat-option value="">All</mat-option>
+                    <mat-option value="processing">Processing</mat-option>
+                    <mat-option value="cancelled">Cancelled</mat-option>
+                    <mat-option value="delivered">Delivered</mat-option>
+                    <mat-option value="shipped">shipped</mat-option>
+                    <mat-option value="pending">Pending</mat-option>
+
+                </mat-select>
+              </mat-form-field>
+              
+        </p>
+    </div>
+
+</div>
+
+<mat-paginator [length]="totalPages"
+              [pageSize]="10"
+              [pageSizeOptions]="pageSizeOptions"
+              aria-label="Select page"
+              (page)="pageChanged($event);" showFirstLastButtons>
+</mat-paginator>
+
+
+<table mat-table [dataSource]="dataOrder" >
+
+  
+  <!-- id Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef class="head"> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <!-- id Column -->
+  <ng-container matColumnDef="exhibitor">
+    <th mat-header-cell *matHeaderCellDef class="head"> Exhibitor </th>
+    <td mat-cell *matCellDef="let element"> {{element.exhibitor.company_name}} </td>
+  </ng-container>
+
+  <!-- status Column -->
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef class="head"> Status </th>
+    <td mat-cell *matCellDef="let element"> 
+      <button mat-button [matMenuTriggerFor]="menu" class="textColor text-capitalize"
+      [ngClass]="{
+        'bg-warning' : element.status == 'pending',
+        'bg-danger' : element.status == 'cancelled',
+        'bg-success' : element.status == 'delivered',
+        'bg-info' : element.status  == 'shipped',
+        'bg-secondary' : element.status == 'processing'
+      }"
+      >
+      
+       {{element.status}}</button>
+    <mat-menu #menu="matMenu" class="text-capitalize">
+      <button mat-menu-item (click)="update(element?.id, 'pending')" class="text-capitalize">pending</button> 
+      <button mat-menu-item (click)="update(element?.id, 'processing')" class="text-capitalize">processing</button> 
+      <button mat-menu-item (click)="update(element?.id, 'shipped')" class="text-capitalize">shipped</button> 
+      <button mat-menu-item (click)="update(element?.id, 'delivered')" class="text-capitalize">delivered</button> 
+      <button mat-menu-item (click)="update(element?.id, 'cancelled')" class="text-capitalize">cancelled</button> 
+
+    </mat-menu>
+    </td>
+    
+    <!-- <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> 
+                <mat-chip-list aria-label="Vendor Status">
+                    <mat-chip (click)="statusChange(element, 'deactivate')" *ngIf="element.is_active" color="success" selected>Active</mat-chip>
+                    <mat-chip (click)="statusChange(element, 'activate')" *ngIf="!element.is_active" color="warn" selected>Not Active</mat-chip>
+                </mat-chip-list>    
+            </td>
+        </ng-container> -->
+    
+  </ng-container>
+
+
+  <!-- created Column -->
+  <ng-container matColumnDef="sub_total">
+    <th mat-header-cell *matHeaderCellDef class="head"> Sub total </th>
+    <td mat-cell *matCellDef="let element"> {{element.sub_total}} </td>
+  </ng-container>
+
+  <!-- created Column -->
+  <ng-container matColumnDef="gst">
+    <th mat-header-cell *matHeaderCellDef class="head"> GST </th>
+    <td mat-cell *matCellDef="let element"> {{element.gst}} </td>
+  </ng-container>
+
+  <!-- created Column -->
+  <ng-container matColumnDef="createdAt">
+    <th mat-header-cell *matHeaderCellDef class="head"> Placed On </th>
+    <td mat-cell *matCellDef="let element"> {{element.createdAt | date}} </td>
+  </ng-container>
+
+  <!-- created Column -->
+  <ng-container matColumnDef="detail">
+    <th mat-header-cell *matHeaderCellDef class="head"> View details </th>
+    <td mat-cell *matCellDef="let element"> 
+      <mat-icon style="cursor: pointer;" (click)="openDialog(element.id)" >remove_red_eye</mat-icon>
+      <!-- <button mat-button (click)="openDialog()">Launch dialog</button> -->
+      {{element.detail }} </td>
+  </ng-container> 
+
+
+  <h1 mat-dialog-title>Dialog with elements</h1>
+<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>
+
+  <!-- created Column -->
+    <!-- <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef class="head"> Action </th>
+      <td mat-cell *matCellDef="let element"> </td>
+    </ng-container> -->
+
+    
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+
+  </div>

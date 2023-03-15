@@ -1,0 +1,149 @@
+<div class="background m-2">
+
+  <div *ngIf="loading" class="bg-loading position-absolute h-100 w-100 d-flex justify-content-center align-items-center" style="left: 0; top: 0; z-index: 1000;">
+    <img style="width: 100px; height: 100px;" src="../../assets/loading-buffering.gif">
+  </div>
+  
+    <div class="row">
+        <div class="col-12 col-md-6 col-sm-6">
+            <p>
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Search</mat-label>
+                  <input matInput placeholder="Search" [(ngModel)]="query" (change)="getDataList()">
+                  <button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''; getDataList();">
+                    <mat-icon>close</mat-icon>
+                </button>
+                  <!-- <mat-icon matSuffix>search</mat-icon> -->
+                </mat-form-field>
+              </p>
+        </div>
+        <div class="col-12 col-md-3 col-sm-6">
+            <p>
+                   <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Select Order</mat-label>
+                <mat-select [(ngModel)]="order" (selectionChange)="page = 0; getDataList()">
+                    <mat-option value="asc">Asc</mat-option>
+                    <mat-option value="desc">Desc</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+        </div>
+        <div class="col-12 col-md-3 col-sm-6">
+            <!-- <p>
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Select Status</mat-label>
+                    <mat-select>
+                        <mat-option value="all">All</mat-option>
+                        <mat-option value="na">Not Active</mat-option>
+                        <mat-option value="active">Active</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </p> -->
+                
+            <button mat-fab
+            mat-raised-button
+            matTooltip="Add products"
+            class="add float-right"
+            routerLink="/vendor/add-product">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <!-- <div class="col-12 col-md-6 col-sm-6">
+            
+                
+                <button mat-fab
+                mat-raised-button
+                matTooltip="Add products"
+                class="add float-right"
+                routerLink="/vendor/add-product">
+                    <mat-icon>add</mat-icon>
+                </button>
+           
+        </div> -->
+    </div>
+    <!-- <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+</mat-paginator> -->
+
+
+      <mat-paginator [length]="totalPages"
+                    [pageSize]="10"
+                    [pageSizeOptions]="pageSizeOptions"
+                    aria-label="Select page"
+                    (page)="pageChanged($event);" showFirstLastButtons>
+      </mat-paginator>
+
+    <table mat-table [dataSource]="dataProduct">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      <!-- image column -->
+
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef class="head"> Image </th>
+        <td mat-cell *matCellDef="let element"> 
+        <img src="{{element?.image}}" alt="" class="product-image">    
+        </td>
+      </ng-container>
+     
+        <!-- vendor Column -->
+        <!-- <ng-container matColumnDef="vendor">
+          <th mat-header-cell *matHeaderCellDef class="head"> Vendor </th>
+          <td mat-cell *matCellDef="let element"> {{element.vendor}} </td>
+        </ng-container> -->
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="head"> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+           <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef class="head"> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+
+           <!-- Price Column -->
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef class="head"> Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+          </ng-container>
+
+           <!-- Reg. At	 Column
+        <ng-container matColumnDef="reg">
+            <th mat-header-cell *matHeaderCellDef class="head"> Reg. at </th>
+            <td mat-cell *matCellDef="let element" type="date"> {{element.reg}} </td>
+          </ng-container> -->
+      
+          
+           <!-- Action	 Column -->
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef class="head"> Action </th>
+            <td mat-cell *matCellDef="let element" type="date"> 
+                <button mat-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                    <mat-menu #menu="matMenu">
+                        <button  mat-menu-item routerLink="/vendor/productEdit/{{element.id}}">
+                            <mat-icon color="primary">edit</mat-icon>
+                            Edit</button>
+                        <button  mat-menu-item (click)="delete(element)" style="cursor: pointer;">
+                            <mat-icon color="warn">delete</mat-icon> 
+                            Delete</button>
+                    </mat-menu>
+               <!-- <img src="../../../assets/Pencil.svg" alt="Edit" class="mx-2">
+               <img src="../../../assets/delete.svg" alt="Delete" class="mx-2"> -->
+            </td>
+          </ng-container>
+      
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      
+
+</div>
+  

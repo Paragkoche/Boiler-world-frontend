@@ -1,0 +1,10 @@
+<section class="example-section">
+    <h2 *ngIf="title">{{ title }} <span class="badge badge-primary">{{ value }}%</span></h2>
+    <mat-progress-bar 
+    class="example-margin" 
+    [color]="color" 
+    [mode]="mode" 
+    [value]="value" 
+    [bufferValue]="bufferValue">
+    </mat-progress-bar>
+</section>

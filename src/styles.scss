@@ -1,0 +1,74 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+*{
+  font-family: 'Roboto' ;
+}
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+    background-color: #0DADF1;
+}
+.mat-flat-button.mat-warn, .mat-raised-button.mat-warn, .mat-fab.mat-warn, .mat-mini-fab.mat-warn {
+    background-color: #EA1C23;
+}
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #0DADF1;
+ border-color: #0DADF1 ;
+}
+.toolbar{
+    //    text-align: center;
+    //    align-content: center;
+    //    padding-top: 15px;
+    //    padding-bottom: 5px;
+        padding: 10px 20px 10px 20px !important;
+       font-size: 20px !important;
+       background: linear-gradient( to right, #C20F19, #28509D) !important;  
+       color: white;
+    //    min-height: 50px;
+    //    max-height: 80px;
+    }
+
+@media (max-width: 786px) {
+    .toolbar{
+        padding: 10px 20px 2px 20px !important;
+    }
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
+    padding-left: 0px !important;
+    border-left: 1px solid #bbb7b7;
+  }
+  
+  th.mat-header-cell, td.mat-cell{
+    text-align: center;
+    font-size: 15px;
+    color: black;
+    border-right: 1px solid #bbb7b7;
+    border-bottom: 1px solid #bbb7b7;
+  }
+  
+  th.mat-header-cell{
+    text-align: center !important;
+    border-top: 1px solid #bbb7b7;
+  }
+  .mat-drawer-inner-container::-webkit-scrollbar {
+    display: none !important;
+}
+  .mat-step-header .mat-step-icon-selected{
+    background-color: var(--primary);
+    color: #fff;
+  }
+  .mat-step-header .mat-step-icon-state-done {
+    // background-color: green;
+    background-color: #8ac55c;
+    color: #fff;
+    /* color: black; */
+}
+.mat-step-header .mat-step-icon-state-edit {
+    background-color: #9b1e1e;
+    color: #fff;
+    /* color: black; */
+}
+

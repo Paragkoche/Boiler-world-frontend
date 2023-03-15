@@ -1,0 +1,203 @@
+.imag {
+    opacity: 1;
+    display: block;
+    max-width: 150px;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
+  .conta {
+    position: relative;
+    max-width: 150px;
+  } 
+  .middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .conta:hover .imag {
+    opacity: 0.3 !important;
+  }
+  
+  .conta:hover .middle {
+    opacity: 1 !important;
+  }
+  
+  .text {
+    background-color: #04AA6D;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+  }
+
+
+
+.d-flex-justify-start-align-center{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: black;
+    p{
+        margin: 0;
+    }
+}
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+
+  }
+// ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element  {
+// 	opacity: 0.1 !important;     /*click effect color change*/
+// 	background-color: #0DADF1  !important;
+// }
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple{
+	background-color: #0DADF1 !important;   /*inner circle color change*/
+}
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+	border-color:#0DADF1 !important; /*outer ring color change*/
+}
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+    opacity: 0.03 !important;
+    background-color: #0DADF1!important;
+  }
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #0DADF1;
+  }
+
+.new:focus > style {
+    display:block; 
+    position:relative; 
+    right: -80%; 
+    top:-2em; 
+    color: blue; 
+    font-family: courier, monospace; 
+    font-size: .75em; 
+    line-height: 1.5; 
+    padding: .5em; 
+    background: #fff; 
+    border: 1px solid #999; 
+    
+    }
+
+mat-list mat-list-item ::ng-deep div.mat-list-item-content{
+    padding-left: 0px !important;
+}
+
+.mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+    background-color: #3d9b1e;
+    color: #fff;
+    /* color: black; */
+}
+.remove-preference{
+    position: absolute;
+    top: -30px;
+    right: 0;
+}
+
+.text-bold{
+    font-weight: bold;
+}
+
+.card{
+    box-shadow: 0px 6px 30px 5px rgba(0, 0, 0, 0.03);
+    border-radius: 10px;
+}
+.formname{
+    // background: linear-gradient(to right, #0f0c29, #302b63,#24243e);
+    background: #6CA9F0;
+}
+[contenteditable] {
+    border-bottom: 1px solid #000;
+    // background-color: #e5e904;
+    height: 30px;
+    padding: 3px;
+    outline: 1px solid #CED4DA;
+    // border-color: #3d9b1e;
+    // border-style: none;
+    border: #e5e904;
+    min-width: 100px;
+  }
+.red{
+    color: red;
+}
+.blue{
+    color: #28509D;
+}
+.heading{
+    font-weight: 600;
+}
+.form-control:focus {
+    border-color: #045DE9;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #045DE9;
+  }
+::ng-deep mat-stepper{
+    .mat-step-label{
+        display: none;
+    }
+}
+
+.loading-div{
+    position: fixed;
+    right: 10px;
+    z-index: 1000;
+    width: 300px;
+}
+
+// for small devices full width
+@media only screen and (max-width: 600px) {
+    .loading-div{
+        position: fixed;
+        right: 10px;
+        z-index: 1000;
+        width: calc(100% - 20px);
+    }
+}
+
+
+.form-check-input {
+    // margin-top: 0% !important;
+}
+
+.form-check{
+    padding-left: 3.25rem;
+}
+
+.row{
+        margin-right: -70px;
+    margin-left: 0;
+}
+
+
+@media print {
+    .footer,
+    #non-printable {
+        display: none !important;
+    }
+    #printable {
+        display: block;
+    }
+}
+
+.progress-bar{
+    background-color: #8ac55c;
+  
+  }
+
+
+.form-control{
+      font-size: 14px;
+  }
+
+
+  .badge{
+      font-weight: 700px !important;
+      font-size: 15px;
+  }

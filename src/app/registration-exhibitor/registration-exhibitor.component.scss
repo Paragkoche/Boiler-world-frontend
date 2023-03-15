@@ -1,0 +1,88 @@
+.body{
+    background-color: #F6FDFF ;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+.containar{
+    background: white;
+   
+    // margin-left: 100px;
+    // margin-right:100px;
+}
+
+.toolbar-logo{
+    height: inherit;
+    position: absolute;
+}
+.main{
+    // padding-top: 50px;
+    // padding-left: 40px;
+    // padding-right: 40px;
+    // padding-bottom: 100px;
+}
+.button{
+   text-align: center;
+    
+}
+.example-spacer {
+    flex: 1 1 auto;
+}
+.otp-number-modal{
+    position: absolute;
+}
+::ng-deep lib-ngx-image-zoom .ngxImageZoomThumbnail{
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+::ng-deep .ngxImageZoomContainer > img{
+    max-width: calc(100vw - 50px) !important;
+    height: auto !important;
+  }
+
+
+  .img-zoom-lens {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    /*set the size of the lens:*/
+    width: 40px;
+    height: 40px;
+  }
+  
+  .img-zoom-result {
+    border: 1px solid #d4d4d4;
+    /*set the size of the result div:*/
+    width: 300px;
+    height: 300px;
+  }
+  .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+    background-color: #3d9b1e;
+    color: #fff;
+    /* color: black; */
+}
+
+
+//   .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary
+//   {
+//     background-color: #002B5C;
+//     padding: 2px;
+//   }
+
+.otp-content{
+    position: fixed;
+    overflow: hidden;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.7);
+}

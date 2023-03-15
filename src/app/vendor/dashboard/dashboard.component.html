@@ -1,0 +1,44 @@
+<div class="container-fluid"  style="padding-top: 10px; padding-bottom: 10px;">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-6">
+            <div class="card shadow rounded" style="height: 100%; width: 100%;">
+                <div class="card-body">
+                    <h2 *ngIf="!logoPreview" class="card-title">Vendor Logo</h2>
+                    <h2 *ngIf="logoPreview" class="card-title">Logo Preview</h2>
+                    <!-- html css progress bar -->
+                    <div *ngIf="uploadStart" class="progress" >
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': progress + '%'}">
+                            {{ progress }}%
+                        </div>
+                    </div>
+                    <img *ngIf="user.company_logo && !logoPreview" class="img-fluid" style="max-height: 300px;" [src]="user.company_logo" >
+                    <img *ngIf="logoPreview" class="img-fluid" style="max-height: 300px;" [src]="logoPreview" >
+                    <div *ngIf="!user.company_logo" class="alert alert-info" role="alert">
+                        <h3 class="alert-heading">Upload Company Logo</h3>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <input type="file" id="company_logo" style="display: none;" (change)="onLogoSelect($event)">
+
+                    <label for="company_logo" *ngIf="user.company_logo" class="card-link btn" style="background-color: #0DADF1; color: white;">Change Logo</label>
+                    <label for="company_logo" *ngIf="!user?.company_logo" class="card-link btn ml-2" style="background-color: #0DADF1; color: white;">Upload Logo</label>
+
+                    <label *ngIf="logoPreview" class="btn  ml-2" style="background-color: #0DADF1; color: white;" (click)="uploadLogo()">
+                        Upload
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-12 col-sm-6 col-md-6">
+            <div class="card shadow rounded" style="height: 100%; width: 100%;">
+                <div class="card-body">
+                    <h2 class="card-title">Messages</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h3 class="alert-heading">No Messages</h3>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>

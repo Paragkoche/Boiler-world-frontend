@@ -1,0 +1,285 @@
+<!-- <div class="sidebar close">
+    <div class="logo-details text-center">
+        <img style="max-width: 64px; margin:auto;" src="../../assets/Boiler_India_Internal_white_logo.png">
+    </div>
+    <ul class="nav-links">
+        <li>
+          
+            <a (click)="navigateToPage('/vendor/dashboard')" href="">
+                <i class='bx bx-user-circle'></i>
+                <span class="link_name">Profile</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Profile</a></li>
+            </ul>
+        </li>
+        <li>
+            <a (click)="navigateToPage('/vendor/add-product')" routerLinkActive="active-list-item">
+                <i class='bx bxs-cart-add'></i>
+                <span class="link_name">Add Product</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="/add-product">Add Product</a></li>
+            </ul>
+        </li>
+        <li>
+            <a (click)="navigateToPage('/vendor/product-list')" routerLinkActive="active-list-item">
+                <i class='bx bx-list-ol' ></i>
+                <span class="link_name">Product list</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="/product-list">Product list</a></li>
+            </ul>
+        </li>
+        <li >
+          k_name">My Stall</span>
+            </a> 
+             <a (click)="navigateToPage('/vendor/orderList')"
+                routerLinkActive="active-list-item">
+               
+                <i class='bx bx-list-ul'></i>
+                <span class="link_name">Order List</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="/orderList">Order List</a></li>
+            </ul>
+        </li>
+
+  
+
+        <li>
+           
+            <a target="_blank" href="https://www.boilerworldexpo.com/boiler-india-2022-media-gallery/" routerLinkActive="active-list-item">
+                <i class='bx bx-image'></i>
+                <span class="link_name">Gallery</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="/exhibitor">Gallery</a></li>
+            </ul>
+        </li>
+        <li>
+
+          
+            <ul class="sub-menu">
+                <li><a class="link_name" href="/exhibitor">Exhibitor</a></li>
+
+            </ul>
+        </li>
+        <li>
+          
+             <a target="_blank" href="https://www.boilerworldexpo.com/" routerLinkActive="active-list-item">
+                <i class='bx bxs-user-detail'></i>
+                <span class="link_name">Partner</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="/exhibitor">Partner</a></li>
+            </ul>
+        </li>
+        <li>
+         
+             <a target="_blank" href="https://www.boilerworldexpo.com/" routerLinkActive="active-list-item">
+                <i class='bx bxs-user-detail'></i>
+                <span class="link_name">Sponsor</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="/exhibitor">Sponsor</a></li>
+            </ul>
+        </li>
+        <li>
+          
+            <a target="_blank" href="https://www.boilerworldexpo.com/boiler-india-2022-vendors/"
+                routerLinkActive="active-list-item">
+                <i class='bx bxs-user-detail'></i>
+                <span class="link_name">Vendor</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="https://www.boilerworldexpo.com/boiler-india-2022-vendors/">Vendor</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+          
+            <a (click)="navigateToPage('/exhibitor/become-a-sponser')" routerLinkActive="active-list-item">
+                <i class='bx bx-star'></i>
+                <span class="link_name">Become a Sponsor</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Become a Sponsor</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="profile-details">
+                <div class="profile-content">
+                    <img *ngIf="user?.company_logo" src="{{user?.company_logo}}" alt="profileImg">
+                </div>
+                    <div class="name-job">
+                        <div class="profile_name">{{user?.company_repName}}</div>
+                        <div class="job">{{user?.designation}}</div>
+                    </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<section class="home-section">
+    <div class="home-content">
+        <i class='bx bx-menu'></i>
+        <span class="text">{{user?.company_name}}</span>
+        <i
+        (click)="logout()"
+        style="color: #E9442D; cursor: pointer" 
+        class='bx bx-exit bx-border bx-sm ml-2' 
+        matTooltip="Logout"></i>
+    </div>
+
+     <div class="p-10">
+        <router-outlet class=""></router-outlet>
+    </div>
+</section>
+ -->
+
+ <ng-container >
+    <mat-toolbar class="example-header">
+        <span class="example-spacer"></span>
+         <div [ngStyle]="{'background-image': user.company_logo ? 'url(' + user.company_logo + ')' : 'url(' + 'https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png' + ')' }"  style="height: 40px; width: 40px; border-radius: 50%; background: round; border: 2px solid white;" class="mr-2" ></div>
+         <span class="text text-white mr-2 ml-2">{{user?.company_name}}</span>
+         <div class="mr-2" style="cursor: pointer">
+            <a (click)="logout()" class="ic">
+                <mat-icon color="warn">power_settings_new</mat-icon>
+                <!-- <i class='bx bx-power-off' style="color: #0DADF1; font-weight:500; font-size: 23px;"></i> -->
+            </a>
+        </div>
+    </mat-toolbar>
+  
+    <mat-sidenav-container class="example-container">
+      <mat-sidenav #sidenav mode="side" opened class="sidebar"> 
+          <header>
+                    <div class="image-text">
+                        <span class="image" style="width: 70%; text-align: center;">
+                            <img src="../../assets/Boiler_India.png" alt="logo">
+                        </span>  
+                    </div>
+                   <div style="text-align: center;">
+                      <h4 style="color: black;">BOILER INDIA 2022</h4>
+                   </div>
+                </header>
+                <mat-divider></mat-divider>
+                <div class="menu-bar">
+                    <div class="menu">
+                         <ul class="menu-links">
+                            <li class="nav-link">
+                                <a href="#" routerLink="/vendor/dashboard">
+                                  <i class='bx bx-user-circle icon'></i>
+                                    <span class="text nav-text">Profile </span>
+                                </a>
+                            </li>
+                            <li class="nav-link">
+                                <a href="#" routerLink="/vendor/add-product">
+                                    <i class='bx bxs-cart-add icon'></i>
+                                    <span class="text nav-text">Add Product</span>
+                                </a>
+                            </li>
+                           
+                            <li class="nav-link">
+                                <a href="#" routerLink="/vendor/product-list">
+                                    <i class='bx bx-list-ol icon'  ></i>
+                                    <span class="text nav-text">Product list</span>
+                                </a>
+                            </li>
+                          
+                            <li class="nav-link">
+                                <a href="#" routerLink="/vendor/orderList">
+                                    <i class='bx bx-list-ul icon'></i>
+                                    <span class="text nav-text">Order List</span>
+                                </a>
+                            </li>
+            
+                            <li class="nav-link">
+                                
+                                <a href="https://india.boilerworldexpo.com/boiler-india-2022-media-gallery/" target="_blank">
+                                    <i class='bx bx-image icon' ></i>
+                                    <span class="text nav-text">Gallery</span>
+                                </a>
+                            </li>
+            
+                            <!-- <li class="nav-link">
+                                <a href="#" routerLink="oem">
+                                    <i class='bx bxs-user-detail icon' ></i>
+                                    <span class="text nav-text">Exhibitor</span>
+                                </a>
+                            </li> -->
+                            <!-- <li class="nav-link">
+                              <a href="#" >
+                                  <i class='bx bxs-user-detail icon' ></i>
+                                  <span class="text nav-text">Exhibitor</span>
+                              </a>
+                          </li> -->
+                        <!-- <li class="nav-link">
+                            <a href="https://www.boilerworldexpo.com/" target="_blank">
+                                <i class='bx bxs-user-detail icon' ></i>
+                                <span class="text nav-text">Partner</span>
+                            </a>
+                        </li>
+                        <li class="nav-link">
+                          <a href="https://www.boilerworldexpo.com/" target="_blank">
+                              <i class='bx bxs-user-detail icon' ></i>
+                              <span class="text nav-text">Sponsor</span>
+                          </a>
+                      </li>
+                      <li class="nav-link">
+                        <a href="https://www.boilerworldexpo.com/boiler-india-2022-vendors/" target="_blank">
+                            <i class='bx bxs-user-detail icon' ></i>
+                            <span class="text nav-text">Vendor</span>
+                        </a>
+                    </li> -->
+                    <li class="nav-link">
+                      <a href="#" routerLink="become-a-sponsor">
+                          <i class='bx bx-star icon' ></i>
+                          <span class="text nav-text">Become a Sponsor</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a (click)="logout()">
+                          <i class='bx bx-log-out icon' ></i>
+                          <span class="text nav-text">Logout</span>
+                      </a>
+                  </li>
+                        </ul>
+                    </div>
+            
+                    <div class="bottom-content">
+                         <!-- <li class="">
+                            <a href="#">
+                                <i class='bx bx-log-out icon' ></i>
+                                <span class="text nav-text">Logout</span>
+                            </a>
+                        </li> -->
+            
+                     
+            
+                        <!-- <li class="mode">
+                            <div class="sun-moon">
+                                <i class='bx bx-moon icon moon'></i>
+                                <i class='bx bx-sun icon sun'></i>
+                            </div>
+                            <span class="mode-text text">Dark mode</span>
+            
+                            <div class="toggle-switch">
+                                <span class="switch"></span>
+                            </div>
+                        </li> -->
+                        
+                    </div>
+                </div>
+            
+      </mat-sidenav>
+  
+      <mat-sidenav-content >
+        <div class="">
+        
+            <router-outlet></router-outlet>
+          </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  
+  </ng-container>
+  

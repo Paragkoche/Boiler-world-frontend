@@ -1,0 +1,361 @@
+<div class="container-fluid"
+style="
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #e5e5e5;
+"
+>
+
+
+  <div class="col-12" style="background-color: white;">
+    <!-- <div class="card shadow rounded mb-2">
+      <img src="../../../assets/BI_stalls on grid-01.svg">
+    </div> -->
+
+
+  <div id="panzoom" style="text-align: center; background-color: white;">
+
+    <object #svg_object id="svg-object" data="../../../../assets/BI22 Latest Exhibition Floor plan_Revised_21.3.22 (1) 1.svg" width="100%" height="100%"></object>
+  </div>
+
+  <!-- <div class="example-button-row d-flex justify-content-end">
+    
+    <button   class="btn zoom-in py-2 justify-content-center align-items-center" style="position: absolute; bottom: 10px; background-color:#0DADF1; color: white;">
+      <i class='bx bx-zoom-in' style="font-size:x-large; "></i>
+    </button>&nbsp;&nbsp;
+    <button  class="btn zoom-out py-2 justify-content-center align-items-center"  style="position: absolute; bottom: 80px; background-color:#0DADF1; color: white;">
+      <i class='bx bx-zoom-out' style="font-size:x-large; "></i>
+    </button>&nbsp;
+    <input type="range" class="zoom-range">&nbsp;
+    <button   class="btn reset py-2 justify-content-center align-items-center" style="position: absolute; bottom: 150px; background-color:#0DADF1; color: white;">
+      <i class='bx bx-reset' style="font-size:x-large;"></i>
+    </button>
+  
+  </div> -->
+  <!-- <div class="py-5 d-flex justify-content-center bg-white  text-primary" style="z-index: 100px;">
+    <div id="description" class="description text-uppercase fs-1 fw-bold" style="font-size: 30px;"></div>
+  </div> -->
+
+  </div>
+  <div class="p-5 d-flex justify-content-center bg-white text-primary" style="z-index: 100px; text-align: center;">
+    <div id="description" class="description text-uppercase fs-1 fw-bold" style="font-size: 20px; line-height: 33px;"></div>
+</div>
+  <div class="col-12 mt-3">
+    <div class="card shadow rounded" style="height: 100%; width: 100%;">
+      <div class="card-body" *ngIf="preference.length">
+        <h2 style="text-align: center;">Stall Preferences</h2>
+        <div class="row" style="position: relative; 
+          border: 1px solid black; 
+          padding: 10px; 
+          margin: 5px; 
+          border-radius:4px;
+          align-items: center;">
+          <div class=" p-2 m-2" *ngFor="let pref_1 of preference_1; let skillIndex=index">
+            <mat-form-field class="stall-pref mx-2" appearance="outline" color="primary">
+              <!-- {{ pref_1 | json }} -->
+              <!-- <mat-label>Select Stall</mat-label> -->
+              <mat-select disabled placeholder="Select stall" [value]="pref_1.stall_no">
+                <mat-option [value]="pref_1.stall_no">
+                  {{ pref_1.stall_no }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-card>
+            <mat-card-content>
+              Total stall/s: {{ preference_1?.length }}
+              <br>
+              Total Area: {{ getTotalArea2(preference_1) }} sqm.
+              <br>
+              <span *ngIf="user.country == 'India' ">
+                Price: INR 22,500/sqm
+              </span>
+              <span *ngIf="user.country != 'India' ">
+                Price: USD 350/sqm
+              </span>
+              <br>
+              <span *ngIf="user.country == 'India' ">
+                Cost: {{ 22500 * getTotalArea2(preference_1) | currency: 'INR': 'INR ' }} + 18% Gst
+              </span>
+              <span *ngIf="user.country != 'India' ">
+                Cost: {{ 350 * getTotalArea2(preference_1) | currency: 'USD': 'USD ' }} + 18% Gst
+              </span>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="row" style="position: relative; 
+              border: 1px solid black; 
+              padding: 10px; 
+              margin: 5px; 
+              border-radius:6px;
+              align-items: center;">
+
+          <div class="row p-2 m-2" *ngFor="let pref_2 of preference_2; let skillIndex=index">
+            <mat-form-field class="stall-pref mx-2" appearance="outline" color="primary">
+              <!-- {{ pref_2.stall }} -->
+              <!-- <mat-label>Select Stall</mat-label> -->
+              <mat-select disabled placeholder="Select stall" [value]="pref_2.stall_no">
+                <mat-option [value]="pref_2.stall_no">
+                  {{ pref_2.stall_no }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <mat-card>
+            <mat-card-content>
+              Total stall/s: {{ preference_2?.length }}
+              <br>
+              Total Area: {{ getTotalArea2(preference_2) }} sqm.
+              <br>
+              <span *ngIf="user.country == 'India' ">
+                Price: INR 22,500/sqm
+              </span>
+              <span *ngIf="user.country != 'India' ">
+                Price: USD 350/sqm
+              </span>
+              <br>
+              <span *ngIf="user.country == 'India' ">
+                Cost: {{ 22500 * getTotalArea2(preference_2) | currency: 'INR': 'INR ' }} + 18% Gst
+              </span>
+              <span *ngIf="user.country != 'India' ">
+                Cost: {{ 350 * getTotalArea2(preference_2) | currency: 'USD': 'USD ' }} + 18% Gst
+              </span>
+            </mat-card-content>
+          </mat-card>
+
+        </div>
+
+        <div *ngIf="preference_3.length" class="row" style="position: relative; 
+              border: 1px solid black; 
+              padding: 10px; 
+              margin: 5px; 
+              border-radius:6px;
+              align-items: center;">
+
+          <div class="row p-2 m-2" *ngFor="let pref_3 of preference_3; let skillIndex=index">
+            <mat-form-field class="stall-pref mx-2" appearance="outline" color="primary">
+              <!-- {{ pref_3.stall }} -->
+              <!-- <mat-label>Select Stall</mat-label> -->
+              <mat-select disabled placeholder="Select stall" [value]="pref_3.stall_no">
+                <mat-option [value]="pref_3.stall_no">
+                  {{ pref_3.stall_no }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <mat-card>
+            <mat-card-content>
+              Total stall/s: {{ preference_3?.length }}
+              <br>
+              Total Area: {{ getTotalArea2(preference_3) }} sqm.
+              <br>
+              <span *ngIf="user.country == 'India' ">
+                Price: INR 22,500/sqm
+              </span>
+              <span *ngIf="user.country != 'India' ">
+                Price: USD 350/sqm
+              </span>
+              <br>
+              <span *ngIf="user.country == 'India' ">
+                Cost: {{ 22500 * getTotalArea2(preference_3) | currency: 'INR': 'INR ' }} + 18% Gst
+              </span>
+              <span *ngIf="user.country != 'India' ">
+                Cost: {{ 350 * getTotalArea2(preference_3) | currency: 'USD': 'USD ' }} + 18% Gst
+              </span>
+            </mat-card-content>
+          </mat-card>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="card shadow rounded" *ngIf="!preference.length">
+
+    <form *ngIf="!preference.length" [formGroup]="preferenceForm" (ngSubmit)="submit()">
+      <div class="card-body">
+        <app-progress mode="indeterminate" *ngIf="loading"></app-progress>
+        <!-- <div class="row" *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+        <div class="col-12 col-sm-8 col-md-10">
+          
+            <mat-form-field appearance="outline" color="primary">
+              <mat-label>Select Stall</mat-label>
+              <mat-select placeholder="Select stall" formControlName="stall_no">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                  <input [(ngModel)]="searchTxt" matInput placeholder="Search...">
+                </mat-form-field>
+                <mat-option *ngFor="let s of stalls | search : searchTxt" [value]="s.stall_no">
+                  {{ s.stall_no }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        
+            <mat-form-field appearance="outline" color="primary">
+              <mat-label>Select Stall</mat-label>
+              <mat-select placeholder="Select stall" [(ngModel)]="selectedValue" formControlName="stall_no">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                  <input [(ngModel)]="searchTxt" matInput placeholder="Search...">
+                </mat-form-field>
+                <mat-option *ngFor="let s of stalls | search : searchTxt" [value]="s.stall_no">
+                  {{ s.stall_no }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matSuffix (click)="test()">delete</mat-icon>
+            </mat-form-field>
+        
+            <mat-form-field appearance="outline" color="primary">
+              <mat-label>Select Stall</mat-label>
+              <mat-select placeholder="Select stall" [(ngModel)]="selectedValue" formControlName="stall_no">
+                <mat-form-field class="w-100" appearance="outline" color="primary">
+                  <input [(ngModel)]="searchTxt" matInput placeholder="Search...">
+                </mat-form-field>
+                <mat-option *ngFor="let s of stalls | search : searchTxt" [value]="s.stall_no">
+                  {{ s.stall_no }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matSuffix (click)="test()">delete</mat-icon>
+            </mat-form-field>
+        </div>
+        <div>
+          <button mat-icon-button (click)="removeQuantity(i)">
+            <mat-icon>
+              delete
+            </mat-icon>
+          </button>
+        </div>
+      </div> -->
+
+
+        <div formArrayName="preferences">
+          <div *ngFor="let pref of preferences().controls; let empIndex=index">
+            <div [formGroupName]="empIndex" class="row" style="position: relative; 
+              border: 1px solid black; 
+              padding: 10px; 
+              margin: 5px; 
+              border-radius:6px;
+              align-items: center;">
+              Preference {{empIndex + 1}}:
+              <!-- <input type="text" formControlName="firstName" />
+              Last Name:
+              <input type="text" formControlName="lastName" /> -->
+
+
+              <div class="row p-2 m-2" formArrayName="stalls">
+                <div *ngFor="let skill of employeeSkills(empIndex).controls; let skillIndex=index">
+                  <div [formGroupName]="skillIndex">
+                    <!-- {{ empIndex }} {{ skillIndex}} Skill : -->
+                    <!-- <input type="text" formControlName="skill" />
+                    Exp:
+                    <input type="text" formControlName="exp" /> -->
+                    <!-- For Stalls1 -->
+                    <mat-form-field *ngIf="empIndex == 0" class="stall-pref mx-2" appearance="outline" color="primary">
+                      <mat-label>Select Stall 1</mat-label>
+                      <mat-select class="select-{{empIndex + 1}}" placeholder="Select stall" formControlName="stall"
+                        (selectionChange)="selectStall($event, empIndex)">
+                        <!-- <mat-form-field class="w-100" appearance="outline" color="primary">
+                            <input (keyup)="searchText($event)" matInput placeholder="Search...">
+                        </mat-form-field> -->
+                        <mat-option *ngFor="let s of stalls" [disabled]="s.pref1selected || s.exhibitor_id" [value]="s.stall_no">
+                          {{ s.stall_no }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-icon *ngIf="empIndex>1 || skillIndex > 0" matSuffix
+                        (click)="removeEmployeeSkill(empIndex,skillIndex)">delete</mat-icon>
+                    </mat-form-field>
+
+                    <!-- For Stalls2 -->
+                    <mat-form-field *ngIf="empIndex == 1" class="stall-pref mx-2" appearance="outline" color="primary">
+                      <mat-label>Select Stall 2</mat-label>
+                      <mat-select class="select-{{empIndex + 1}}" placeholder="Select stall" formControlName="stall"
+                        (selectionChange)="selectStall($event, empIndex)">
+                        <!-- <mat-form-field class="w-100" appearance="outline" color="primary">
+                            <input (keyup)="searchText($event)" matInput placeholder="Search...">
+                        </mat-form-field> -->
+                        <mat-option *ngFor="let s of stalls" [disabled]="s.pref2selected || s.exhibitor_id" [value]="s.stall_no">
+                          {{ s.stall_no }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-icon *ngIf="empIndex>1 || skillIndex > 0" matSuffix
+                        (click)="removeEmployeeSkill(empIndex,skillIndex)">delete</mat-icon>
+                    </mat-form-field>
+
+                    <!-- For Stalls3 -->
+                    <mat-form-field *ngIf="empIndex == 2" class="stall-pref mx-2" appearance="outline" color="primary">
+                      <mat-label>Select Stall 3</mat-label>
+                      <mat-select class="select-{{empIndex + 1}}" placeholder="Select stall" formControlName="stall"
+                        (selectionChange)="selectStall($event, empIndex)">
+                        <!-- <mat-form-field class="w-100" appearance="outline" color="primary">
+                            <input (keyup)="searchText($event)" matInput placeholder="Search...">
+                        </mat-form-field> -->
+                        <mat-option *ngFor="let s of stalls" [disabled]="s.pref3selected || s.exhibitor_id" [value]="s.stall_no">
+                          {{ s.stall_no }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-icon *ngIf="empIndex>1 || skillIndex > 0" matSuffix
+                        (click)="removeEmployeeSkill(empIndex,skillIndex)">delete</mat-icon>
+                    </mat-form-field>
+
+                    <!-- <button (click)="removeEmployeeSkill(empIndex,skillIndex)">
+                      Remove
+                    </button> -->
+                  </div>
+                </div>
+              </div>
+              <button class="btn" style="background-color: #0DADF1; color: white;"  type="button" (click)="addEmployeeSkill(empIndex)"
+                matTooltip="Add Stall">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button *ngIf="empIndex > 1" mat-icon-button class="remove-preference" (click)="removeEmployee(empIndex)"
+                color="warn">
+                <mat-icon>close</mat-icon>
+              </button>
+
+              <mat-card class="m-2">
+                <mat-card-content>
+                  Total stall/s: {{ employeeExactSkills(empIndex).length }}
+                  <br>
+                  Total Area: {{ getTotalArea( empIndex ) }} sqm.
+                  <br>
+                  <span *ngIf="user.country == 'India' ">
+                    Price: INR 22,500/sqm
+                  </span>
+                  <span *ngIf="user.country != 'India' ">
+                    Price: USD 350/sqm
+                  </span>
+                  <br>
+                  <span *ngIf="user.country == 'India' ">
+                    Cost: {{ 22500 * getTotalArea( empIndex ) | currency: 'INR': 'INR ' }} + 18% Gst
+                  </span>
+                  <span *ngIf="user.country != 'India' ">
+                    Cost: {{ 350 * getTotalArea( empIndex ) | currency: 'USD': 'USD ' }} + 18% Gst
+                  </span>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+          <!-- <button type="button" (click)="getTotalArea(0)">Add Employee</button> -->
+        </div>
+
+
+        <div class="text-left">
+          <button type="button" *ngIf="preferences().length < 3" class="btn" style="background-color: #0DADF1; color: white;"
+            (click)="addEmployee()" matTooltip="Add Preference">
+            Add Preference<mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+
+
+      <div class="card-footer">
+        <!-- {{this.preferenceForm.value | json}} -->
+        <button [disabled]="loading || preference.length > 0" type="submit" class="btn" style="background-color: #0DADF1; color: white;">Submit</button>
+        <!-- <button type="button" mat-raised-button color="primary" (click)="setPref(preference)">Refresh</button> -->
+      </div>
+    </form>
+  </div>
+</div>

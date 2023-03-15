@@ -1,0 +1,3016 @@
+<!-- <div class="loading-div alert alert-warning">
+    <div class="d-flex align-items-center">
+        <strong>Loading...</strong>
+        <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+    </div>
+</div> -->
+
+<div class="container-fluid" style="
+    padding-top: 10px;
+    padding-bottom: 10px;">
+    <div class="card">
+        <div class="card-body">
+
+            <!-- loading div with a loader -->
+
+            <div class="container-fluid formname">
+
+                <div class="d-flex justify-content-center p-2 text-white">
+                    <h2 class="m-0">{{ currentForm }}</h2>
+                </div>
+
+            </div>
+
+            <mat-stepper #matStepper [selectedIndex]="selectedIndex" (selectionChange)="matStepperFunc($event)"
+                class="example-stepper position-relative" [orientation]="(stepperOrientation | async)!"
+                labelPosition="bottom" [linear]="isLinear">
+
+
+
+                <!-- 1 label="USER PROFILE"-->
+                <mat-step state="{{
+                    user.oem_user_profile?'edit':'number'
+                }}" completed="{{
+                    user.oem_user_profile?'true':'false'
+                }}"
+                editable
+                label="USER PROFILE">
+                    <form [formGroup]="USER_PROFILE" (ngSubmit)="submitUSER_PROFILE()">
+                        <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="blue">Contact Details</h2>
+
+                                <div>
+                                    <!-- Title: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 d-flex-justify-start-align-center">
+                                            <p>Title :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3">
+                                            <!-- user title select -->
+                                            <select class="form-control" formControlName="title" required>
+                                                <option value="">Select</option>
+                                                <option value="Mr">Mr</option>
+                                                <option value="Mrs">Mrs</option>
+                                                <option value="Miss">Miss</option>
+                                                <option value="Ms">Ms</option>
+                                                <option value="Dr">Dr</option>
+                                                <option value="Prof">Prof</option>
+                                                <option value="Rev">Rev</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['title'].touched && USER_PROFILE.controls['title']?.hasError('required')
+                                        || userFormSubmitted && USER_PROFILE.controls['title']?.hasError('required')">
+                                                Title is required</mat-error>
+                                        </div>
+                                    </div>
+
+                                    <!-- First Name: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>First Name :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="first_name" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['first_name'].touched && USER_PROFILE.controls['first_name']?.hasError('required')
+                                        || userFormSubmitted && USER_PROFILE.controls['first_name']?.hasError('required')">
+                                                First Name is required</mat-error>
+                                        </div>
+                                    </div>
+
+                                    <!-- Last Name: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Last Name :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="last_name" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['last_name'].touched && USER_PROFILE.controls['last_name']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['last_name']?.hasError('required')">
+                                                Last Name is required</mat-error>
+                                        </div>
+                                    </div>
+
+                                    <!-- Email Address: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Email Address :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="email" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['email'].touched && USER_PROFILE.controls['email']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['email']?.hasError('required')">
+                                                Email is required</mat-error>
+                                        </div>
+                                    </div>
+                                    <!-- Alternative Email: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Alternative Email :</p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="alternative_email" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!-- Onsite Contact Name: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Onsite Contact Name :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="company_repName" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['company_repName'].touched && USER_PROFILE.controls['company_repName']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['company_repName']?.hasError('required')">
+                                                Onsite Contact Name is required</mat-error>
+                                        </div>
+                                    </div>
+                                    <!-- Mobile Number: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Mobile Number :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="mobile_no" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['mobile_no'].touched && USER_PROFILE.controls['mobile_no']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['mobile_no']?.hasError('required')">
+                                                Mobile Number is required</mat-error>
+                                        </div>
+                                    </div>
+
+                                    <h2 class="blue">Stand Details</h2>
+
+                                    <!-- Booth Number: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Booth Number :</p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="booth_number" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!-- Booth Type: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Booth Type :</p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="booth_type" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <h4 class="red">To change stall type, kindly connect with the exhibition
+                                        coordinators on
+                                        details mentioned below.
+                                    </h4>
+                                    <!-- Booth Size -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Booth Size :</p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="booth_size" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!-- Dimension A -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Dimension A :</p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="dimension_a" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!-- Dimension B -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Dimension B :</p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="dimension_b" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!--Height Restrictions: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Height Restrictions :</p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="height_restrictions" type="text"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <!--One open side -->
+                                    <!-- <div class="form-check mt-2">
+                                        <input class="form-check-input mr-2" type="radio" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            One open side
+                                        </label>
+                                    </div> -->
+                                    <!--Two open side -->
+                                    <!-- <div class="form-check">
+                                        <input class="form-check-input mr-2" type="radio">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Two open side
+                                        </label>
+                                    </div> -->
+                                    <!--Three open side -->
+                                    <!-- <div class="form-check">
+                                        <input class="form-check-input mr-2" type="radio">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Three open side
+                                        </label>
+                                    </div> -->
+                                    <!--Four open side -->
+                                    <!-- <div class="form-check">
+                                        <input class="form-check-input mr-2" type="radio">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Four open side
+                                        </label>
+                                    </div> -->
+                                    <h4 class="red mt-2">For any modification, kindly connect with the exhibition
+                                        coordinators on details mentioned below.</h4>
+                                    <h2 class="blue">Company Information</h2>
+
+                                    <!--Company Name: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Company Name :<span class="red">*</span></p>
+
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="company_name" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['company_name'].touched && USER_PROFILE.controls['company_name']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['company_name']?.hasError('required')">
+                                                Company Name is required</mat-error>
+                                        </div>
+                                    </div>
+                                    <!--Address Line 1: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Address Line 1 :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="address_line1" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['address_line1'].touched && USER_PROFILE.controls['address_line1']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['address_line1']?.hasError('required')">
+                                                Address Line 1 is required</mat-error>
+                                        </div>
+                                    </div>
+                                    <!--Address Line 2 -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Address Line 2 :</p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="address_line2" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!--Address Line 3 -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Address Line 3 :</p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="address_line3" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!--City: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>City :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="city" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['city'].touched && USER_PROFILE.controls['city']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['city']?.hasError('required')">
+                                                City is required</mat-error>
+                                        </div>
+                                    </div>
+                                    <!--Zip/Postcode: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Zip/Postcode :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="post_code" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['post_code'].touched && USER_PROFILE.controls['post_code']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['post_code']?.hasError('required')">
+                                                Zip/Postcode is required</mat-error>
+                                        </div>
+                                    </div>
+                                    <!--Country: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Country :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="country" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['country'].touched && USER_PROFILE.controls['country']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['country']?.hasError('required')">
+                                                Country is required</mat-error>
+                                        </div>
+                                    </div>
+                                    <!--State/Province: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>State/Province :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="state" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['state'].touched && USER_PROFILE.controls['state']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['state']?.hasError('required')">
+                                                State/Province is required</mat-error>
+                                        </div>
+                                    </div>
+                                    <!--Mobile Number: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Mobile Number :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="mobile_no" type="text" class="form-control">
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['mobile_no'].touched && USER_PROFILE.controls['mobile_no']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['mobile_no']?.hasError('required')">
+                                                Mobile Name is required</mat-error>
+
+                                        </div>
+                                    </div>
+                                    <!--Notice: -->
+                                    <div class="row mb-2">
+
+                                        <div class="col-12">
+                                            <small class="red">Please add country code, std code & telephone in
+                                                following
+                                                format +91 022
+                                                48659842</small>
+                                        </div>
+                                    </div>
+
+                                    <!--GST Number: -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>GST Number :<span class="red">*</span></p>
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="gst" type="text" maxlength="15" class="form-control" >
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['gst'].touched && USER_PROFILE.controls['gst']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['gst']?.hasError('required')">
+                                                GST Number is required</mat-error>
+                                                <mat-error *ngIf="USER_PROFILE.controls['gst']?.errors?.maxlength">GST must be max 15 char.
+                                                </mat-error>
+                                                <mat-error *ngIf="USER_PROFILE.controls['gst']?.hasError('gstInValid')">
+                                                    GST Number Invalid
+                                                </mat-error>
+                                        </div>
+                                    </div>
+                                    <!--Website -->
+                                    <div class="row mb-2">
+                                        <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                            <p>Website :<span class="red">*</span></p>
+
+                                        </div>
+                                        <div class="col-12 col-sm-3 col-md-3">
+                                            <input formControlName="website" type="text" class="form-control">
+                                            
+                                            <mat-error
+                                                *ngIf="USER_PROFILE.controls['website'].touched && USER_PROFILE.controls['website']?.hasError('required')
+                                                || userFormSubmitted && USER_PROFILE.controls['website']?.hasError('required')">
+                                                Website is required</mat-error>
+                                                <mat-error *ngIf="USER_PROFILE.controls['website']?.hasError('websiteInValid')">
+                                                    Website Invalid
+                                                </mat-error>
+                                                
+                                        </div>
+                                    </div>
+                                    <!--Notice: -->
+                                    <div class="row mb-2">
+
+                                        <div class="col-12">
+                                            <small class="red">Please use website pattern www.abc.xyz</small>
+                                        </div>
+                                    </div>
+
+                                    <!-- Exhibitor Coordinator START-->
+                                    <h2 class="blue">For Assistance Contact</h2>
+                                    <!-- person -->
+
+
+
+                                     <!-- table -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered text-center">
+
+                                            <thead>
+                                                <tr class="blue">
+                                                    <th>Name </th>
+                                                    <th>Contact</th>
+                                                    <th>Email Address</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Shraddha Kalamkar</td>
+                                                    <td>+91 99870 26115</td>
+                                                    <td>shraddha@orangebeak.com</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>Anosh Piarejee</td>
+                                                    <td>+91 84463 02245</td>
+                                                    <td>anosh@orangebeak.com
+                                                    </td>
+                                                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- end table -->
+
+<!-- 
+                                   <div class="row">
+                                        <div class="col-12 col-sm-4">
+
+                                            <table class="table table-borderless">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-bold">• Name :</td>
+                                                        <td>Shraddha Kalamkar</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold">• Contact:</td>
+                                                        <td>+91 99870 26115</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold">• Email Address:</td>
+                                                        <td>shraddha@orangebeak.com</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+
+                                            <table class="table table-borderless">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="text-bold">• Name :</td>
+                                                        <td>Anosh Piarejee</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold">• Contact:</td>
+                                                        <td>+91 84463 02245</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold">• Email Address:</td>
+                                                        <td>anosh@orangebeak.com</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        BlankSpace
+                                        <div class="col-12 col-sm-3"></div>
+                                    </div> -->
+
+                                    <!-- Exhibitor Coordinator END-->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- <button type="button" class="mt-2 mr-1" mat-stroked-button color="primary" matStepperPrevious>Back</button> -->
+                    <button type="button" class="mt-2 mr-1" mat-stroked-button color="primary"
+                        (click)="submitUSER_PROFILE()">{{ user.oem_user_profile ? '' : 'Submit &' }} Next</button>
+                    <!-- <button type="button" class="mt-2 mr-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+                </mat-step>
+
+
+                <!-- 2 label="FASCIA BOARD & SHELL SCHEME PACKAGE"-->
+                <mat-step 
+                state="{{
+                    user.oem_fascia?'edit':'number'
+                }}" completed="{{
+                    user.oem_fascia?'true':'false'
+                }}" 
+                editable
+                class="mat-step-icon" label="FASCIA BOARD & SHELL SCHEME PACKAGE">
+                    <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+                    <h2 class="blue">Form Information</h2>
+                    <p>Company Name and Stand Number to appear on our BOOTH/STAND FASCIA Ex: (ORANGEBEAK TECHNOLOGIES
+                        PVT
+                        LTD) Maximum 100 characters including spaces.</p>
+                    <h2 class="blue" *ngIf="!myStallType.includes('bare')">Furniture Allotment</h2>
+                    <div *ngIf="!myStallType.includes('bare')">
+                        <!-- table -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th class="blue">Deliverables</th>
+                                        <th>Tables</th>
+                                        <th>Chairs</th>
+                                        <th>Power Socket</th>
+                                        <th>Dustbin</th>
+                                        <th>Spotlights</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="blue">{{ myStallArea }} sqm</td>
+                                        <td>{{ myStallTable }}</td>
+                                        <td>{{ myStallChair }}</td>
+                                        <td>{{ myStallPowerSocket }}</td>
+                                        <td>{{ myStallDustbin }}</td>
+                                        <td>{{ myStallSpotlight }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table -->
+                    </div>
+                    <!-- <h2 class="blue">Form Submission</h2> -->
+                    <div class="">
+                        <p>Company Name: TYPE (in UPPER CASE), in the boxes below (include spacing) the name to appear
+                            on
+                            the fascia.<span class="red">*</span>
+                        </p>
+                    </div>
+                    <div class="">
+                        <input (keyup)="fasciaChange()" #fascia type="text" 
+                        class="form-control text-uppercase" maxlength="100" [disabled]="user?.oem_fascia">
+                        <small class="form-text text-muted " align="end"><span class="red">
+                            Words Count : 
+                            {{fasciaLength
+                                ||
+                                0}}/100</span> </small>
+                                <mat-error   *ngIf="!fasciaValue">Please Provide fascia board name</mat-error>
+                    </div>
+
+                    <div class="">
+                        <button (click)="resetFascia()" [disabled]="user?.oem_fascia" class="btn btn-primary">Reset</button>
+
+                    </div>
+                    <h2 class="blue ">Note:</h2>
+                    <div>
+                        <p>• Only one company name as per the contract signed is allowed on each exhibiting stand,
+                            unless
+                            organisers grant written approval:</p>
+                        <p>• No alteration/modification on the fascia name board is permitted once the form is
+                            submitted:
+                        </p>
+                        <p>• For any modification contact:</p>
+                    </div>
+
+                    <h2 class="blue">For Assistance Contact</h2>
+
+                    <!-- person details -->
+                              <!-- table -->
+                              <div class="table-responsive">
+                                <table class="table table-bordered text-center">
+    
+                                    <thead>
+                                        <tr class="blue">
+                                            <th>Name </th>
+                                            <th>Contact</th>
+                                            <th>Email Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Shraddha Kalamkar</td>
+                                            <td>+91 99870 26115</td>
+                                            <td>shraddha@orangebeak.com</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Anosh Piarejee</td>
+                                            <td>+91 84463 02245</td>
+                                            <td>anosh@orangebeak.com
+                                            </td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end table -->
+
+                    
+                    <button class="mt-2 m-1" mat-stroked-button color="primary" (click)="submitFascia()">{{ user.oem_fascia ? '' : 'Submit &' }}
+                        Next</button>
+                    <!-- <button class="mt-2 m-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+                </mat-step>
+
+
+
+                <!-- 3 label="FEXHIBITOR BADGES"-->
+                <mat-step state="{{
+                    user.oem_exhibitor_badges?'edit':'number'
+                }}" completed="{{       
+                    user.oem_exhibitor_badges?'true':'false'
+                }}" 
+                editable
+                label="EXHIBITOR BADGES">
+                    <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+                    <h2 class="blue">Form Information</h2>
+
+                    <p>Please provide below details of all personnel from your company and associated companies who will
+                        be manning your exhibition booth. The quantity of badges issued will be based on the booth size
+                        booked (refer table below) and should
+                        be submitted to organisers within the deadine stipulated.</p>
+
+
+                    <p style="font-weight: 500;">
+                        • Please fill the form in ENGLISH (CAPITAL LETTERS) only
+                    </p>
+                    <p>
+                        • Please specify company name as indicated in the contract if below given names are different:
+                    </p>
+
+                    <h2 class="blue">Form Submission</h2>
+
+                    <div>
+                        <p>
+                            As part of your exhibitor package you have following Exhibitor Badges <br>
+                           
+                        </p>
+                        <p><span class="badge">Total Badges: </span>  {{ myStallBadges + myStallExtraBadges }}</p>
+                        <p><span class="badge">Used Badges:</span>  {{ getFilledBadges().length }}</p>
+                        <!-- <p><span class="badge">Remaining Badges: </span> {{ myStallFoodCoupons + myStallExtraFoodCoupons - getFilledBadges().length }}</p> -->
+                    </div>
+                    <table class="table table-bordered text-uppercase" *ngIf="user.oem_exhibitor_badges">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr No.</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Designation</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Mobile</th>
+                                <th scope="col">Blood Group</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let badge of user.exhibitor_mannings; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ badge.name }}</td>
+                                <td>{{ badge.designation }}</td>
+                                <td>{{ badge.email }}</td>
+                                <td>{{ badge.mobile }}</td>
+                                <td>{{ badge.blood_group }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div *ngIf="!user.oem_exhibitor_badges" class="position-relative border-bottom pt-5">
+                        <form [formGroup]="EXHIBITOR_BADGES">
+                            <div class="" formArrayName="manners"
+                                *ngFor="let control of getBadges().controls; let badgeIndex=index">
+                                <!-- <div class="col-12"> -->
+                                <div class="row mr-0 position-relative" [formGroupName]="badgeIndex">
+                                    <button (click)="removeBadge(badgeIndex)" mat-icon-button class="remove-preference"
+                                    color="warn">
+                                    <mat-icon>close</mat-icon>
+                                    </button>
+                                    <div class="col-12 col-sm-4 col-md-3">
+                                        <div class="form-group">
+                                            <label style="font-weight: 500;">Name:</label>
+                                            <input formControlName="name" type="text"
+                                                class="form-control text-uppercase">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4 col-md-3">
+                                        <div class="form-group">
+                                            <label style="font-weight: 500;">Designation:</label>
+                                            <input formControlName="designation" type="text"
+                                                class="form-control text-uppercase">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4 col-md-3">
+                                        <div class="form-group">
+                                            <label style="font-weight: 500;">Email:</label>
+                                            <input formControlName="email" type="text"
+                                                class="form-control text-uppercase">
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-12 col-sm-4 col-md-3">
+                                        <div class="form-group">
+                                            <label style="font-weight: 500;">Mobile:</label>
+                                            <input formControlName="mobile" type="text" class="form-control" (keypress)="isNumberKey($event)" >
+                                            <mat-error *ngIf="control['controls']['mobile'].hasError('hasNumber')">
+                                                Please Enter Number
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4 col-md-3">
+                                        <div class="form-group">
+                                            <label style="font-weight: 500;">Blood Group:</label>
+                                            <select class="form-control" formControlName="blood_group">
+                                                <option value="">Select Blood Group</option>
+                                                <option value="A+">A+</option>
+                                                <option value="A-">A-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="AB+">AB+</option>
+                                                <option value="AB-">AB-</option>
+                                                <option value="O+">O+</option>
+                                                <option value="O-">O-</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </form>
+                        <div class="add-button mb-3 text-center mt-1">
+                            <button (click)="addBadge()" align="center"
+                             type="button" mat-raised-button
+                                color="primary">Add
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <span *ngIf="badge_loading" >
+                        <mat-spinner [color]="'primary'" [diameter]="30"></mat-spinner>
+                    </span>
+                    <a class="btn btn-primary" type="button"
+                     href="mailto:anosh@orangebeak.com?subject=Additional Exhibitor Badges Required">
+                        Request additional badges
+                    </a>
+                    <!-- <button *ngIf="!badge_loading" class="btn btn-primary" type="button" 
+                    (click)="request_badges()">Request additional badges</button> -->
+                    <h2 class="mt-2 blue">For Assistance Contact</h2>
+                        <!-- table -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+
+                                <thead>
+                                    <tr class="blue">
+                                        <th>Name </th>
+                                        <th>Contact</th>
+                                        <th>Email Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Shraddha Kalamkar</td>
+                                        <td>+91 99870 26115</td>
+                                        <td>shraddha@orangebeak.com</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Anosh Piarejee</td>
+                                        <td>+91 84463 02245</td>
+                                        <td>anosh@orangebeak.com
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table -->
+
+                    
+                    <button class="mt-2 m-1" mat-stroked-button color="primary"
+                        (click)="submitEXHIBITOR_BADGES_FORM()">Submit & Next</button>
+                    <!-- <button class="mt-2 m-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+                </mat-step>
+
+
+
+                <!-- 4 label="EXHIBITOR DELIVERABLES- F & B"-->
+                <mat-step state="{{
+                    user.exhibitor_deliverables_correct?'edit':'number'
+                }}" completed="{{
+                    user.exhibitor_deliverables_correct?'true':'false'
+                }}" 
+                editable
+                label="EXHIBITOR DELIVERABLES- F & B">
+                    <form [formGroup]="EXHIBITOR_DELIVERABLES">
+                        <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+                        <h2 class="mt-2 blue">Company Information:</h2>
+                        <div>
+                            <!-- Company Name: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 d-flex-justify-start-align-center">
+                                    <p>Company Name :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <input formControlName="company_name" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="EXHIBITOR_DELIVERABLES.controls['company_name'].touched && EXHIBITOR_DELIVERABLES.controls['company_name']?.hasError('required')">
+                                        Company Name is required</mat-error>
+
+                                </div>
+                            </div>
+
+                            <!-- Stall Number -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Stall Number :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="stall_number" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Stall Type: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Stall Type :</p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="stall_type" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Stall Size: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Stall Size :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="stall_size" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Number of food coupons: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Number of food coupons :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="food_coupons" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-check pl-0">
+                                <mat-checkbox class="example-margin" formControlName="exhibitor_deliverables_correct">
+                                    All
+                                    details are correct</mat-checkbox>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="my-3">
+                        <a class="btn btn-primary" type="button"
+                        href="mailto:anosh@orangebeak.com?subject=Additional food coupons required">
+                        Request additional food coupons
+                       </a>
+                    </div>
+
+                    
+                    <button class="mt-2 mr-1" mat-stroked-button color="primary"
+                        (click)="submitEXHIBITOR_DELIVERABLES_FORM()"> {{ user.exhibitor_deliverables_correct ? '' : 'Submit &' }} Next</button>
+                    <!-- <button class="mt-2 mr-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+                </mat-step>
+
+                <!-- 5 label="POWER REQUIREMENT"-->
+                <mat-step state="{{
+                    user.oem_power_requirement?'edit':'number'
+                }}" completed="{{
+                    user.oem_power_requirement?'true':'false'
+                }}" 
+                editable
+                label="POWER REQUIREMENT">
+                    <form [formGroup]="POWER_REQUIREMENT" (ngsubmit)="submitPOWER_REQUIREMENT()">
+                        <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+
+                        <h2 class="blue">Form Submission</h2>
+                        <!-- table -->
+                        <div class="table-bordered">
+                            <div class="col-12">
+                                <!-- Company Name: -->
+                                <div class="row mb-2 mt-2 ">
+                                    <div class="col-12 col-sm-3 d-flex-justify-start-align-center">
+                                        <p>Company Name :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3">
+                                        <input formControlName="company_name" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="POWER_REQUIREMENT.controls['company_name'].touched && POWER_REQUIREMENT.controls['company_name']?.hasError('required')">
+                                            Company Name is required</mat-error>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- Contact Person: -->
+                                <div class="row mb-2 ">
+                                    <div class="col-12 col-sm-3 d-flex-justify-start-align-center">
+                                        <p>Contact Person :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3">
+                                        <input formControlName="company_repName" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="POWER_REQUIREMENT.controls['company_repName'].touched && POWER_REQUIREMENT.controls['company_repName']?.hasError('required')">
+                                            Contact Person Name is required</mat-error>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- Contact Number: -->
+                                <div class="row mb-2 ">
+                                    <div class="col-12 col-sm-3 d-flex-justify-start-align-center">
+                                        <p>Contact Number :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3">
+                                        <input formControlName="mobile_no" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="POWER_REQUIREMENT.controls['mobile_no'].touched && POWER_REQUIREMENT.controls['mobile_no']?.hasError('required')">
+                                            Contact Number is required</mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="mt-2" style="font-weight: 500;">SINGLE PHASE CONNECTION</h4>
+                        <div class="mb-3">
+                            <mat-radio-group formControlName="single_phase_connection" aria-label="Select an option">
+                                <mat-radio-button [value]="1">1 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="2">2 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="3">3 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="4">4 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="5">5 KW
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <!-- table -->
+                        <!-- <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="col-12 col-sm-9 col-md-9 ">
+                                    <tr class="blue">
+                                        <th scope="col">Indicate Your Requirement (Kindly check &#10004; in the
+                                            appropriate
+                                            slot)</th>
+                                        <th scope="col">Connected Load</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="col-12 col-sm-3 col-md-3 ">
+
+                                    <tr>
+                                        <th>
+                                            <input type="radio" formControlName="single_phase_connection" [value]="1">
+                                        </th>
+                                        <td>1 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <input type="radio" formControlName="single_phase_connection" [value]="2">
+                                        </th>
+                                        <td>2 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <input type="radio" formControlName="single_phase_connection" [value]="3">
+                                        </th>
+                                        <td>3 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <input type="radio" formControlName="single_phase_connection" [value]="4">
+                                        </th>
+                                        <td>4 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <input type="radio" formControlName="single_phase_connection" [value]="5">
+                                        </th>
+                                        <td>5 KW</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> -->
+                        <h4 style="font-weight: 500;">THREE PHASE CONNECTION</h4>
+                        <!-- table -->
+                        <!-- <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="col-12 col-sm-9 col-md-9 ">
+                                    <tr class="blue">
+                                        <th scope="col">Indicate Your Requirement (Kindly check &#10004; in the
+                                            appropriate
+                                            slot)</th>
+                                        <th scope="col">Connected Load</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="col-12 col-sm-3 col-md-3 ">
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="1">
+                                        </th>
+                                        <td>1 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="2">
+                                        </th>
+                                        <td>2 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="3">
+                                        </th>
+                                        <td>3 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="4">
+                                        </th>
+                                        <td>4 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="5">
+                                        </th>
+                                        <td>5 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="6">
+                                        </th>
+                                        <td>6 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="7">
+                                        </th>
+                                        <td>7 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="8">
+                                        </th>
+                                        <td>8 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="9">
+                                        </th>
+                                        <td>9 KW</td>
+                                    </tr>
+                                    <tr>
+                                        <th><input type="radio" formControlName="three_phase_connection" [value]="10">
+                                        </th>
+                                        <td>10 KW</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> -->
+                        <div>
+                            <mat-radio-group formControlName="three_phase_connection" aria-label="Select an option">
+                                <mat-radio-button [value]="1">1 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="2">2 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="3">3 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="4">4 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="5">5 KW
+                                </mat-radio-button>
+
+                                <mat-radio-button [value]="6">6 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="7">7 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="8">8 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="9">9 KW
+                                </mat-radio-button>
+                                <mat-radio-button [value]="10">10 KW
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <!--For more than 10KW (Three Phase), Please specify here: -->
+                        <div class="row mb-2 mt-2">
+                            <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                <p>For more than 10KW (Three Phase): <br> Please specify here :</p>
+                            </div>
+                            <div class="col-12 col-sm-3 col-md-3">
+                                <input type="nubmer" (keyup)="threePhaseCustomConn($event)" class="form-control" [disabled]="user.oem_power_requirement">
+                            </div>
+                            <div class="col-12 col-sm-3 col-md-3">
+                                <button class="btn" style="background-color: #0DADF1; color: white;" (click)="removeSelection()" [disabled]="user.oem_power_requirement">Reset Phase Connection</button>
+                            </div>
+                        </div>
+
+                        <h2 class="blue">Please Note</h2>
+                        <div>
+                            <p>The standard supply is 220V <u>with approximately 10% fluctuation.</u>&nbsp; <span
+                                    style="background-color: yellow;">For the safety of your requirement, please use a
+                                    voltage
+                                    stabilizer.</span></p>
+                        </div>
+                        <h2 class="mt-2 blue">For Assistance Contact</h2>
+                        <!-- person -->
+                                 <!-- table -->
+                                 <div class="table-responsive">
+                                    <table class="table table-bordered text-center">
+        
+                                        <thead>
+                                            <tr class="blue">
+                                                <th>Name </th>
+                                                <th>Contact</th>
+                                                <th>Email Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Shraddha Kalamkar</td>
+                                                <td>+91 99870 26115</td>
+                                                <td>shraddha@orangebeak.com</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>Anosh Piarejee</td>
+                                                <td>+91 84463 02245</td>
+                                                <td>anosh@orangebeak.com
+                                                </td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- end table -->
+
+                    </form>
+                    
+                    <button class="mt-2 mr-1" mat-stroked-button color="primary"
+                        (click)="submitPOWER_REQUIREMENT()"> {{ user.oem_power_requirement ? '' :'Submit
+                        &' }} Next</button>
+                    <!-- <button class="mt-2 mr-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+                </mat-step>
+
+
+                <!-- 6 label="FURNITURE & OTHER EQUIPMENT"-->
+                <mat-step state="{{
+                    user.oem_furniture_requirement?'edit':'number'
+                }}" completed="{{
+                    user.oem_furniture_requirement?'true':'false'
+                }}" 
+                editable
+                label="FURNITURE & OTHER EQUIPMENT">
+                    <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+
+                    <div>
+                        <select class="form-control" (change)="getVendorProduct($event)">
+                            <option *ngFor="let v of vendorList" value="{{v.id}}">{{v.company_name}}</option>
+                        </select>
+                    </div>
+                    <section class="example-section">
+                        <mat-checkbox class="example-margin" [(ngModel)]="isFurnitureApplicable"
+                            [ngModelOptions]="{standalone: true}">NOT APPLICABLE </mat-checkbox>
+                        <!-- {{isFurnitureApplicable}} -->
+                    </section>
+                    <!-- table -->
+                    <div class="mt-2 table-responsive" *ngIf="!isFurnitureApplicable">
+                        <table class="table table-bordered">
+                            <thead class="col-12 col-sm-3 col-md-3 ">
+                                <tr class="blue">
+                                    <th scope="col" class="col-1"></th>
+                                    <th scope="col" class="col-3">ITEM IMAGE</th>
+                                    <th scope="col" class="col-4">DESCRIPTION</th>
+                                    <th scope="col" class="col-4">COST</th>
+                                    <th scope="col" class="col-4">QUANTITY</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="col-12 col-sm-3 col-md-3 ">
+                                <tr *ngFor="let product of vendorProduct">
+                                    <td style="text-align: center;"><input type="checkbox"
+                                            (change)="checkProduct(product)">
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="conta">
+                                            <img 
+                                            src="{{ product.image }}" class="imag"/>
+                                            <div class="middle">
+                                                <!-- <button class="btn btn-primary" >View</button> -->
+                                                <i class='bx bx-fullscreen' (click)="openDialog(product.image)"  style="font-size: 48px;" ></i>
+                                                
+                                              </div> 
+                                        </div>
+                                    </td>
+                                    <td>{{ product.name }}</td>
+                                    <td>{{ product.price }}</td>
+                                    <td>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Quantity</mat-label>
+                                            <input matInput placeholder="Enter quantity" type="number" 
+                                            (keypress)="isNumberKey($event)"
+                                            (change)="setQuantity($event,product)" min="0">
+                                            <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                                            <!-- <mat-hint>Hint</mat-hint> -->
+                                          </mat-form-field>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12" style="text-align:end;">
+                        <p><span class="mr-3" style="font-weight: 500;">
+                            Sub Total:</span> {{ subTotal | currency:'':'' }}
+                            INR</p>
+                        <p><span class="mr-3" style="font-weight: 500;">
+                            GST @18%:</span> {{ gst | currency:'':'' }} INR
+                        </p>
+                        <p><span class="mr-3" style="font-weight: 500;">
+                            Total:</span> {{ total | currency:'':'' }} INR
+                        </p>
+                    </div>
+                    <button type="button" class="float-right" mat-flat-button color="primary"
+                        (click)="placeOrder()">Place
+                        Order</button>
+
+                        <!-- table -->
+                        <h2 class="mt-2 blue">Supplier information</h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+
+                                <thead>
+                                    <tr class="blue">
+                                        <th>Name </th>
+                                        <th>GST Number</th>
+                                        <th>Contact</th>
+                                        <th>Email Address</th>
+                                        <th>Company</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Dipesh Bharadiya</td>
+                                        <td>27AAMCP8237B1ZA</td>
+                                        <td>+91 95940 07888</td>
+                                        <td>dipesh@perficientevents.com</td>
+                                        <td> Perficient events</td>
+                                        
+                                    </tr>
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table -->  
+
+                    <h2 class="mt-2 blue">For Assistance Contact</h2>
+                    <!-- person -->
+                         <!-- table -->
+                         <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+
+                                <thead>
+                                    <tr class="blue">
+                                        <th>Name </th>
+                                        <th>Contact</th>
+                                        <th>Email Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Shraddha Kalamkar</td>
+                                        <td>+91 99870 26115</td>
+                                        <td>shraddha@orangebeak.com</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Anosh Piarejee</td>
+                                        <td>+91 84463 02245</td>
+                                        <td>anosh@orangebeak.com
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table -->
+
+                    
+                    <button class="mt-2 mr-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button>
+                    <!-- <button class="mt-2 mr-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+
+                </mat-step>
+
+                <!-- 7 label="HOST & HOSTESS"-->
+                <mat-step state="{{
+                    user.oem_host_hostess?'edit':'number'
+                }}" completed="{{
+                    user.oem_host_hostess?'true':'false'
+                }}" label="HOST & HOSTESS">
+                    <form [formGroup]="HOST_and_HOSTESS" (ngSubmit)="submitHOST_and_HOSTESS_FORM()">
+                        <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+
+                        <h2 class="blue">Form Submission</h2>
+
+                        <div class="table-responsive">
+
+                            <!-- <table class="table table-bordered">
+                                <thead>
+                                    <tr class="blue" style="text-align: center;">
+                                        <th scope="col">No. Of Days</th>
+                                        <th scope="col">Per Day Charges For Host (INR)</th>
+                                        <th scope="col">Qty of Host</th>
+                                        <th scope="col">Per Day Charges For Hostess (INR)</th>
+                                        <th scope="col">Qty of Hostess</th>
+                                        <th scope="col">Total(INR)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="text-align: center;">
+                                        <td>3 days</td>
+                                        <td>1500.00</td>
+                                        <td> <input type="number" formControlName="host_qty" class="form-control">
+                                        </td>
+                                        <td>600.00</td>
+                                        <td> <input type="number" formControlName="hostess_qty"
+                                                class="form-control"></td>
+                                        <td>{{ (HOST_and_HOSTESS.value.host_qty * 3 * 1500 +
+                                            HOST_and_HOSTESS.value.hostess_qty * 3 * 600) | currency:'':'' }} INR
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table> -->
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="blue" style="text-align: center;">
+                                        <th scope="col">Sr. No.</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Rate Per Day (Rs.)</th>
+                                        <th scope="col">No. Of Days</th>
+                                        <th scope="col">No. of People</th>
+                                        <th scope="col">Total Amount(INR)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let h of hostSetting; let i = index" style="text-align: center;">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ h.category }}</td>
+                                        <td>{{ h.rate_per_day }}</td>
+                                        <td>{{ h.no_of_day }}</td>
+                                        <td> <input type="number" min="0" onkeypress="return event.charCode >= 48" (change)="hostQuamtity($event, h)" class="form-control" [value]="h.quantity">
+                                            <!-- <mat-error
+                                            *ngIf="HOST_and_HOSTESS.controls['host_qty'].touched && HOST_and_HOSTESS.controls['host_qty']?.hasError('required')">
+                                            No is required</mat-error> -->
+                                        </td>
+                                        <td>{{ (h.quantity * h.no_of_day * h.rate_per_day) | currency:'':'' }}
+                                            INR</td>
+                                    </tr>
+                                    <!-- <tr style="text-align: center;">
+                                        <td>1</td>
+                                        <td>Smart Host</td>
+                                        <td>2000.00</td>
+                                        <td>3</td>
+                                        <td> <input type="number" formControlName="smart_host_qty" class="form-control">
+                                           
+                                        </td>
+                                        <td>{{ (HOST_and_HOSTESS.value.host_qty * 3 * 1650) | currency:'':'' }}
+                                            INR</td>
+                                    </tr>
+                                    <tr style="text-align: center;">
+                                        <td>2</td>
+                                        <td>Basic Hostess</td>
+                                        <td>2500.00</td>
+                                        <td>3</td>
+                                        <td> <input type="number" formControlName="basic_hostess_qty" class="form-control">
+                                            
+
+                                        <td>{{ (HOST_and_HOSTESS.value.hostess_qty * 3 * 2500) | currency:'':'' }}
+                                            INR</td>
+                                    </tr>
+                                    <tr style="text-align: center;">
+                                        <td>2</td>
+                                        <td>Smart Hostess</td>
+                                        <td>3000.00</td>
+                                        <td>3</td>
+                                        <td> <input type="number" formControlName="smart_hostess_qty" class="form-control">
+                                           
+                                        </td>
+
+                                        <td>{{ (HOST_and_HOSTESS.value.hostess_qty * 3 * 3000) | currency:'':'' }}
+                                            INR</td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="col-12" style="text-align:end;">
+                            <p><span class="mr-3" style="font-weight: 500;">Sub Total (INR):</span>
+                                {{ hostSubTotal | currency:'':'' }} INR</p>
+                            <p><span class="mr-3" style="font-weight: 500;">GST @18% (INR):</span> {{
+                                hostGst | currency:'':'' }} INR</p>
+                            <p><span class="mr-3" style="font-weight: 500;">Total (INR):</span> {{
+                                hostTotal | currency:'':'' }} INR</p>
+                            <button class="btn btn-primary">Place Order</button>
+                        </div>
+                        <h2 class="blue">Note:</h2>
+                        <div>
+                            <p>1. The minimum period of employment is average 8 hrs/day. 30 minutes lunch time excluded.
+                            </p>
+                            <p>2. The assigned staff will report directly to the exhibitor's booth on-site. On the first
+                                show day, staff will be present at least 1 hr before the show opens.</p>
+                            <p>3. Temporary staff should not be entrusted with handling of cash or other valuable items.
+                            </p>
+                            <p>4. Exhibitors will be responsible for the safety of the temporary staff (host/hostess)
+                                while
+                                on duty on their booth.
+                            </p>
+                            <p>Temporary staff will be properly dressed in formals i.e. Males will be wearing formals
+                                and
+                                females wearing sarees or business suits who will help the exhibitors promote their
+                                products/services to their customers/buyers. They will
+                                not extend any help to clean tables/wash utensils etc. They will also not take the
+                                responsibility of serving alcohol, as this is not allowed within the exhibition complex
+                                as
+                                per the rules & regulations.
+                            </p>
+                        </div>
+                        <h2 class="blue">Supplier Infromation:</h2>
+                        <!-- <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-bold">• Name :</td>
+                                            <td>Ganesh Parker</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-bold">• Contact:</td>
+                                            <td>+91 98204 26564</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-bold">• Email Address:</td>
+                                            <td>ganesh.parkar@fairactexpo.com</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+
+
+                                  <!-- table -->
+                                  <div class="table-responsive">
+                                    <table class="table table-bordered text-center">
+        
+                                        <thead>
+                                            <tr class="blue">
+                                                <th>Name </th>
+                                                <th>GST Number</th>
+                                                <th>Contact</th>
+                                                <th>Email Address</th>
+                                                <th>Company</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Dipesh Bharadiya</td>
+                                                <td>27AAMCP8237B1ZA</td>
+                                                <td>+91 95940 07888</td>
+                                                <td>dipesh@perficientevents.com</td>
+                                                <td> Perficient events</td>
+                                                
+                                            </tr>
+                                          
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- end table -->
+
+                        
+                        <button type="submit" class="mt-2" mat-stroked-button color="primary"
+                            (click)="submitHOST_and_HOSTESS_FORM()">Submit & Next</button>
+                        <!-- <button type="button" class="mt-5 m-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+                    </form>
+                </mat-step>
+
+                <!-- 8 label="BARE SPACE AND STALL DESIGN APPROVAL"-->
+                <mat-step state="{{
+                    user.oem_bare_space_stall_design?'edit':'number'
+                }}" completed="{{
+                    user.oem_bare_space_stall_design?'true':'false'
+                }}" *ngIf="myStallType.includes('bare')" label="BARE SPACE AND STALL DESIGN APPROVAL">
+                    <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+                    <p>
+                        Opting for a bare stall indicates that you have decided to go for the exhibition space without
+                        any
+                        stall deliverables (table, chair, fascia, lights, dustbin, carpet). Owing to the height
+                        restrictions
+                        it is mandatory for exhibitors to get their stall designs pre-approved through this online
+                        exhibitor
+                        manual.</p>
+                    <p>
+                        For any queries, connect with the exhibition coordinators on the details mentioned at the end of
+                        this form.
+
+                    </p>
+                    <h2 class="mt-2 blue">Company Information:</h2>
+                    <!-- form -->
+                    <form [formGroup]="BARE_SPACE_AND_STALL_DESIGN_APPROVAL"
+                        (ngSubmit)="submitBARE_SPACE_AND_STALL_DESIGN_APPROVAL()">
+                        <div>
+                            <!-- Company Name: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 d-flex-justify-start-align-center">
+                                    <p>Company Name :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <input formControlName="company_name" type="text" class="form-control">
+                                    <mat-error
+                                    *ngIf="BARE_SPACE_AND_STALL_DESIGN_APPROVAL.controls['company_name'].touched && BARE_SPACE_AND_STALL_DESIGN_APPROVAL.controls['last_name']?.hasError('required')
+                                    || bareFormSubmitted && BARE_SPACE_AND_STALL_DESIGN_APPROVAL.controls['company_name']?.hasError('required')">
+                                    Company Name is required</mat-error>                                </div>
+                            </div>
+
+                            <!-- Stall Number: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Stall Number :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="stall_number" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Stall Type: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Stall Type :<span class="red">*</span> </p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="stall_type" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Stall Size: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Stall Size :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="stall_size" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <!-- Length Size: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Length :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="length" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <!-- Width Size: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Width :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="width" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <!-- Height Size: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Height :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="height" type="text" class="form-control">
+                                </div>
+                            </div>
+                                <!-- <input type="file" class="" required (change)="companyLogo($event)"> -->
+                                          <!--  <input accept="application/pdf" type="file" class=""
+                                        (change)="ContractorSelect($event)"> -->
+                            <!-- Upload stall design  -->
+                            <div class="row mb-2 mt-3 ">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Upload stall design :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 mt-4 col-sm-3 col-md-3 custom-file" *ngIf="!user.oem_bare_space_stall_design">
+                                    
+                                    
+                                    <input formControlName="stall_design" accept="application/pdf"  type="file" required
+                                        (change)="stallDesignFileChange($event)">
+                                            <mat-error *ngIf="bareFormSubmitted && !stallDesignFile">
+                                                Please upload stall design
+                                            </mat-error>
+                                    <label>Choose file...</label>
+                                    <small class="mr-2 ">(Max 10MB)</small>
+
+                                </div>
+                                <div class="col-12 col-sm-2 col-md-3 mt-4 " *ngIf="!user.oem_bare_space_stall_design">
+                                    <button type="button" class="btn" style="background-color: #0DADF1; color: white;"
+                                        (click)="uploadStallDesign()">Upload</button>
+                                </div>
+                                <div class="col-12 col-sm-2 col-md-3 mt-4 ">
+                                    <a *ngIf="user.stall_design || BARE_SPACE_AND_STALL_DESIGN_APPROVAL.value.stall_design"
+                                        target="_blank"
+                                        href="{{user.stall_design || BARE_SPACE_AND_STALL_DESIGN_APPROVAL.value.stall_design}}"
+                                        class="btn" style="background-color: #0DADF1; color: white;"> View Uploaded</a>
+                                </div>
+                                <div class="col-12 col-sm-12">
+                                    <app-progress *ngIf="uploadStart" class="m-2" [title]="'Uploaded'"
+                                        [value]="progress">
+                                    </app-progress>
+                                </div>
+                            </div>
+
+                            <div class="form-check pl-0">
+                                <mat-checkbox class="example-margin" 
+                                formControlName="stall_design_correct">
+                                All details
+                                    are
+                                    correct</mat-checkbox>
+                            </div>
+                        </div>
+                    </form>
+                    <br><br>
+                    <h1 class="mt-2 blue">Contact Information
+
+                    </h1>
+                    <!-- person details -->
+                     <!-- table -->
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+
+                        <thead>
+                            <tr class="blue">
+                                <th>Name </th>
+                                <th>Contact</th>
+                                <th>Email Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Shraddha Kalamkar</td>
+                                <td>+91 99870 26115</td>
+                                <td>shraddha@orangebeak.com</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>Anosh Piarejee</td>
+                                <td>+91 84463 02245</td>
+                                <td>anosh@orangebeak.com
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end table -->
+
+
+
+                    
+                    <button class="mt-2 mr-1" mat-stroked-button color="primary"
+                        (click)="submitBARE_SPACE_AND_STALL_DESIGN_APPROVAL()">{{ user.oem_bare_space_stall_design ? '' : 'Submit &' }} Next</button>
+                    <!-- <button class="mt-2 mr-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+
+
+
+                </mat-step>
+
+                <!-- 9 label="BOOTH CONTRACTOR AUTHORISATION FORM"-->
+                <mat-step state="{{
+                    user.oem_booth_contractor?'edit':'number'
+                }}" completed="{{
+                    user.oem_booth_contractor?'true':'false'
+                }}" label="BOOTH CONTRACTOR AUTHORISATION FORM">
+                    <form [formGroup]="BOOTH_CONTRACTOR_AUTHORISATION_1">
+                        <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+                        <h2 class="mt-2 blue">Form Information:</h2>
+
+                        <div>
+                            <p>
+                                As a part of booth/stall space handover procedure for bare space, kindly provide the details of the contractor your company has hired for the fabrication of your booth/stall at BOILER INDIA 2022.                            </p>
+                            <p>
+                                Bare stall will be handed over to you on 11th September at 9.00 pm and will have to be cleared on 16th September before midnight.
+                            </p>
+                            <p>
+                                Heavy equipment movement to the venue: 11th Sept ‘22, 9:00 pm - 12th Sept ‘22 6:00 am
+                            </p>
+                            <p>
+                                Kindly upload a letter of authorisation on your company letterhead in the name of the booth/stall fabricator signed and stamped by a competent authority and ask the vendor to carry a copy of it at the venue. In case of multiple contractors add them separately.                            </p>
+                            <p>
+                                Only authorised vendors will be permitted to enter the venue and carry out any fabrication activity. These vendors must abide by the general terms and condition of the exhibition and venue.                            </p>
+                            <!-- <p>As a part of booth/stall space handover procedure for bare space, kindly provide the
+                                details
+                                of the contractor your company has hired for the fabrication of your booth/stall at
+                                BOILER
+                                INDIA 2022. </p>
+                            <p>Bare stall will be handed over to you on 27th February at 9.00 am and will have to be
+                                cleared
+                                on 3rd March before midnight.</p>
+                            <p>Kindly upload a letter of authorisation on your company letterhead in the name of the
+                                booth/stall fabricator signed and stamped by a competent authority and ask the vendor to
+                                carry a copy of it at the venue. In case of multiple
+                                contractors add them separately.</p>
+                            <p>Only authorised vendors will be permitted to enter the venue and carry out any
+                                fabrication
+                                activity. These vendors must abide by the general terms and condition of the exhibition
+                                and
+                                venue.</p> -->
+                        </div>
+
+                        <div class="mb-3">
+                            <!-- Company Name: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 d-flex-justify-start-align-center">
+                                    <p>Company Name :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="company_name" type="text" class="form-control">
+                                </div>
+
+                            </div>
+
+                            <!-- Stall Number -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Stall Number :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="stall_number" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Stall Type: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Stall Type :</p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="stall_type" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Stall Size: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Stall Size :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="stall_size" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <section class="example-section">
+                            <mat-checkbox class="example-margin" [checked]="isBootApplicable" [(ngModel)]="isBootApplicable"
+                                [ngModelOptions]="{standalone: true}">NOT APPLICABLE </mat-checkbox>
+                            <!-- {{isBootApplicable}} -->
+                        </section>
+                        <div class="row" *ngIf="!isBootApplicable">
+                            <div class="col-12 col-sm-4 col-md-4  mb-3">
+                                <input formControlName="contractor_company_name" type="text" class="form-control mb-1"
+                                    placeholder="Contractor Company Name*">
+                                <mat-error
+                                    *ngIf="BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_company_name'].touched && BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_company_name']?.hasError('required')
+                                    || boothFormSubmitted && BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_company_name']?.hasError('required')">
+                                    Contractor company name is required</mat-error>
+
+                                <input formControlName="contractor_person_name" type="text" class="form-control mb-1 "
+                                    placeholder="Contractor contact person name*">
+                                <mat-error
+                                    *ngIf="BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_person_name'].touched && BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_person_name']?.hasError('required')
+                                    || boothFormSubmitted && BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_person_name']?.hasError('required')">
+                                    Contractor person name is required</mat-error>
+                                <input formControlName="contractor_person_mobile" type="text" class="form-control mb-1"
+                                    placeholder="Contractor contact person mobile number*">
+                                <mat-error
+                                    *ngIf="BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_person_mobile'].touched && BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_person_mobile']?.hasError('required')
+                                    || boothFormSubmitted && BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_person_mobile']?.hasError('required')">
+                                    Contractor person mobile is required</mat-error>
+                                <input formControlName="contractor_person_email" type="text" class="form-control mb-1"
+                                    placeholder="Contractor contact person email*">
+                                <mat-error
+                                    *ngIf="BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_person_email'].touched && BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_person_email']?.hasError('required')
+                                    || boothFormSubmitted && BOOTH_CONTRACTOR_AUTHORISATION_1.controls['contractor_person_email']?.hasError('required')">
+                                    Contractor person email person mobile is required</mat-error>
+                                <!-- <input type="file" (change)="ContractorSelect($event)" class="form-control mb-3"
+                                    placeholder="Upload letter of authorisation*"> -->
+
+                                        <input accept="application/pdf" type="file" class=""
+                                        (change)="ContractorSelect($event)">
+                                            <mat-error
+                                            *ngIf="boothFormSubmitted && !authorisation_letter">
+                                            Image is required</mat-error>
+                                        <!-- <label class="custom-file-label">Choose file...</label> -->
+                                        <br>
+                                        <small class="mr-2 ">(PDF Format Only)</small>
+    
+                                    
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="row" *ngIf="!isBootApplicable">
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div *ngFor="let contractor of contractors" class="alert alert-info" role="alert">
+                                <h3 class="alert-heading">{{contractor.contractor_company_name}}</h3>
+                                <p>Name: {{ contractor.contractor_person_name }}</p>
+                                <p>Mobile: {{ contractor.contractor_person_mobile }}</p>
+                                <p>Email: {{ contractor.contractor_person_email }}</p>
+                                <hr>
+                                <p class="mb-0">
+                                    <span style="cursor: pointer;" (click)="openContractor(contractor)"
+                                        class="badge badge-primary badge-pill p-2">View Letter</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="mt-3 blue">For Assistance Contact</h2>
+                    <!-- person -->
+                  <!-- table -->
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+
+                        <thead>
+                            <tr class="blue">
+                                <th>Name </th>
+                                <th>Contact</th>
+                                <th>Email Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Shraddha Kalamkar</td>
+                                <td>+91 99870 26115</td>
+                                <td>shraddha@orangebeak.com</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>Anosh Piarejee</td>
+                                <td>+91 84463 02245</td>
+                                <td>anosh@orangebeak.com
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end table -->
+                    
+                    <button class="mt-2" mat-stroked-button color="primary"
+                        (click)="submitBOOTH_CONTRACTOR_AUTHORISATION_1()">Submit & Next</button>
+                </mat-step>
+
+                <!-- 10 label="CATALOGUE ENTRY" -->
+                <mat-step state="{{
+                    user.oem_catalog_entry?'edit':'number'
+                }}" completed="{{
+                    user.oem_catalog_entry?'true':'false'
+                }}" class="mat-step-icon" label="CATALOGUE ENTRY">
+                    <form [formGroup]="CATALOGUE_ENTRY" (ngSubmit)="submitCATALOGUE_ENTRY_FORM()">
+                        <h2 class="blue">Form Information</h2>
+                        <p>
+                            As part of your event agreement you are allocated an exhibitor listing in the event
+                            catalog (exhibitors' directory). Please submit the required details in the fields
+                            marked
+                            by the deadline stated. This information will be used in the event catalog so
+                            please ensure all details are correct. If the information shown is correct, please
+                            click
+                            submit to send the form. If you are unable to complete the form or wish to retain
+                            the
+                            information entered so far, click save.
+                        </p>
+                        <p>
+                            By submitting this form you are agreeing to the terms and conditions stated.
+                        </p>
+                        <div class="row m-0 p-0">
+                            
+
+                            <div class="col-12 m-0 p-0">
+                                <h2 class="blue">Form Submission</h2>
+                            </div>
+                            <div class="col-12 p-0">
+                                <!-- Name of Organisation -->
+                                <div class="row mb-2 p-0">
+                                    <div class="col-12 col-sm-3 d-flex-justify-start-align-center">
+                                        <p>Name of organization :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3">
+                                        <input formControlName="name_of_organisation" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['name_of_organisation']?.hasError('required')
+                                            || catalogueFormSubmitted && CATALOGUE_ENTRY.controls['name_of_organisation']?.hasError('required')">
+                                            Name of organization is required</mat-error>
+
+                                    </div>
+                                </div>
+
+                                <!-- Booth Number -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Booth Number :</p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="booth_no" type="text" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Address line 1 -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Address line 1 :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="address_line1" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['address_line1']?.hasError('required')
+                                            || catalogueFormSubmitted && CATALOGUE_ENTRY.controls['address_line1']?.hasError('required')">
+                                            Address line 1 is required</mat-error>
+
+                                    </div>
+                                </div>
+
+                                <!-- Address line 2 -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Address line 2 :</p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="address_line2" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <!-- Address line 3 -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Address line 3 :</p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="address_line3" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <!-- City -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>City :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="city" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['city']?.hasError('required')
+                                            || catalogueFormSubmitted && CATALOGUE_ENTRY.controls['city']?.hasError('required')">
+                                            City is required</mat-error>
+
+                                    </div>
+                                </div>
+                                <!-- Post Code -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Post Code :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="post_code" type="text" class="form-control">
+                                        <!-- <input formControlName="city" type="text" class="form-control"> -->
+                                        <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['post_code']?.hasError('required')
+                                            || catalogueFormSubmitted && CATALOGUE_ENTRY.controls['post_code']?.hasError('required')">
+                                            Post Code is required</mat-error>
+                                    </div>
+                                </div>
+                                <!-- Country  -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Country :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="country" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['country']?.hasError('required')
+                                            || catalogueFormSubmitted && CATALOGUE_ENTRY.controls['country']?.hasError('required')">
+                                            Country is required</mat-error>
+                                    </div>
+                                </div>
+                                <!-- Contact person -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Contact person :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="contact_person" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['contact_person']?.hasError('required')
+                                            || catalogueFormSubmitted && CATALOGUE_ENTRY.controls['contact_person']?.hasError('required')">
+                                            Contact person is required</mat-error>
+                                    </div>
+                                </div>
+                                <!-- Mobile number -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Mobile number :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="catalogue_mobile_no" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['mobile_number']?.hasError('required')
+                                            || catalogueFormSubmitted && CATALOGUE_ENTRY.controls['mobile_number']?.hasError('required')">
+                                            Mobile number is required</mat-error>
+                                    </div>
+                                </div>
+                                <!-- Email -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Email :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="catalogue_email" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['email']?.hasError('required')
+                                            || catalogueFormSubmitted && CATALOGUE_ENTRY.controls['email']?.hasError('required')">
+                                            Email is required</mat-error>
+                                    </div>
+                                </div>
+                                <!-- Website : -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Website :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="website" type="text" class="form-control">
+                                        <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['website']?.hasError('required')
+                                            || catalogueFormSubmitted && CATALOGUE_ENTRY.controls['website']?.hasError('required')">
+                                                Website is required</mat-error>
+                                    </div>
+                                </div>
+                                <!-- Contact person designation : -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>Contact person designation :</p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <input formControlName="contact_person_designation" type="text"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <!-- General Company/ Product Description -->
+                                <div class="row mb-2">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                        <p>General Company/ Product Description :<span class="red">*</span></p>
+                                    </div>
+                                    <div class="col-12 col-sm-3 col-md-3">
+                                        <!-- <textarea #company_desc formControlName="company_profile" type="text"
+                                            class="form-control" maxlength="150">
+                                        </textarea>
+                                        
+                                        <small class="form-text text-muted" align="end"><span class="red">
+                                            Words Count :
+                                                {{ words }}/150</span> </small> -->
+                                        <!-- text area for word count -->
+
+                                        <textarea [attr.disabled]="words >151 ? '' : null" 
+                                            #company_desc formControlName="company_profile" class="form-control"
+                                             (keydown)="wordCounter()" #text id="wmd-input" 
+                                             name="post-text" class="wmd-input s-input bar0 
+                                             js-post-body-field processed" cols="32" rows="4"
+                                             data-post-type-id="2" tabindex="101" data-min-length="" 
+                                            oncopy="return false;"  onpaste="return false;" oncut="return false;"></textarea>
+
+                                        <!-- <div>Words:<span id="wordCount">{{ words }}</span></div> -->
+
+                                        <!-- <textarea class="w-100"
+                                        [attr.disabled]="words >150 ? '' : null"
+                                            #company_desc formControlName="company_profile" class="form-control"
+                                             (keydown)="wordCounter()" type="text" id="wmd-input" 
+                                             name="post-text" class="wmd-input s-input bar0 js-post-body-field processed" 
+                                             data-post-type-id="2"  data-min-length=""  cols="32    " rows="4"
+                                             oncopy="return false;" onpaste="return false;" oncut="return false;">
+                                        </textarea>
+
+                                        <div>Words:<span id="wordCount">{{ words }}</span></div> -->
+
+
+                                        <!-- end text area -->
+
+                                           <mat-error
+                                            *ngIf="CATALOGUE_ENTRY.touched && CATALOGUE_ENTRY.controls['company_profile']?.hasError('required')">
+                                            General Company/ Product Description</mat-error>
+                                        <small class="form-text text-muted" align="end"><span class="red">
+                                            Words Count :
+                                                {{ words }}/150</span> </small>
+                                    </div>
+                                </div>
+
+                                <!-- Trader and Principal -->
+                                <form [formGroup]="CATALOGUE_ENTRY_PRINCIPLE">
+                                    <div class="mb-3 mt-3 border border-secondary rounded ">
+                                        <h2 class="heading ml-4">In case of a trader, add principal:</h2>
+                                        <div formArrayName="principles"
+                                            *ngFor="let control of getPrinciples(); let badgeIndex=index">
+                                            <div [formGroupName]="badgeIndex" class="row ml-4 mr-3">
+                                                <div class="col-12 col-sm-3 col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Name:</label>
+                                                        <input formControlName="name" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-2 col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Company:</label>
+                                                        <input formControlName="company" type="text"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-2 col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Website:</label>
+                                                        <input formControlName="website" type="text"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-2 col-md-2">
+                                                    <!-- mat trash icon button -->
+                                                    <button (click)="removePrinciple(badgeIndex)" mat-icon-button
+                                                        class="" color="warn">
+                                                        <mat-icon>close</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 col-12 col-sm-2 col-md-2 d-flex-justify-start-align-center">
+                                        <button (click)="addPrinciple()" class="btn" style="background-color: #0DADF1; color: white;" type="button">
+                                            Add More</button>
+                                    </div>
+                                </form>
+
+                                <!-- Upload Company Logo  -->
+                                <!-- <div class="row mb-2 mt-3 ">
+                                    <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center" >
+                                        <p>Upload Company Logo :</p>
+                                    </div>
+                                    <div class="col-12 mt-4 col-sm-3 col-md-3">
+                                        <input type="file" class="" required (change)="companyLogo($event)">
+                                        <mat-error
+                                        *ngIf="catalogueFormSubmitted && !file">
+                                        Image is required</mat-error>
+                                        <br>
+                                        <small class="mr-2 ">(300 dpi, File Type JPEG/PDF)</small>
+                                        <app-progress *ngIf="uploadStart" class="m-2" [title]="'Uploaded'"
+                                            [value]="progress">
+                                        </app-progress>
+
+                                    </div>
+                                    <div class="col-12 col-sm-2 col-md-3 mt-4 ">
+                                        <button class="btn" (click)="companyLogoUpload()" 
+                                        style="background-color: #0DADF1; color: white;">Upload</button>
+
+                                        <a target="_blank" *ngIf="user?.company_logo" href="{{ user?.company_logo }}"
+                                            class="btn ml-2" style="background-color: #0DADF1; color: white;">View Uploaded</a>
+                                    </div>
+                                </div> -->
+
+                            </div>
+                        </div>
+                    </form>
+                    
+
+                    <button class="mt-5 m-1" mat-stroked-button color="primary"
+                        (click)="submitCATALOGUE_ENTRY_FORM()">{{ user.oem_catalog_entry ? '' : 'Submit &' }} Next</button>
+                    <!-- <button class="mt-5 m-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+                </mat-step>
+
+                <!-- 10  label="VISA INVITATION LETTER" -->
+                <mat-step state="{{
+                    user.oem_visa?'edit':'number'
+                }}" completed="{{
+                    user.oem_visa?'true':'false'
+                }}" label="VISA INVITATION LETTER">
+                    <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+                    <h2 class="mt-2 blue">Form Information</h2>
+
+                    <!-- form -->
+                    <div>
+                        <p>Foreigners (except the countries in Visa Exemptions List) must
+                             obtain an entry visa before proceeding to India, Exhibitors 
+                             are recommended to process the application at least one 
+                             month before departure.
+                        </p>
+                        <p style="font-weight: 500;">
+                            Exhibitors with invitation letter from Organiser:
+                        </p>
+                        <p>
+                           1. The applicants for visas are required to obtain an invitation letter from the organiser which will be ready within 7 days after receiving the below complete information, it will be sent to you/your company.
+                        </p>
+                        <p>
+                            2. I have in the last 14 days (please tick, wherever it applies to you, otherwise leave blank)
+                        </p>
+                        <p>
+                            3. Upon receipt of an invitation letter, the applicant is required to present his/her passport, a recent passport size photograph, a completed visa application form and other documents to the Visa Official Agencies in their respective countries for Visa Application.
+                        </p>
+                        <!-- <p>The applicants for visas are required to obtain an invitation letter from the organiser which
+                            will be ready within 7 days after receiving the below complete information, it will be sent
+                            to
+                            you/your company. </p>
+                        <p>2. I have in the last 14 days (please tick, wherever it applies to you, otherwise leave
+                            blank):
+                        </p>
+                        <p>Upon receipt of an invitation letter, the applicant is required to present his/her passport,
+                            a
+                            recent passport size photograph, a completed visa application form and other documents to
+                            the
+                            Visa Official Agencies in their respective
+                            countries for Visa Application.</p> -->
+                        <p style="font-weight: 500; "> <u>Attention</u></p>
+                        <p>1. The document to be submitted for visa application is contingent upon necessities and
+                            appropriateness of purposes stated in the application form </p>
+                        <p>2. Your passport needs to be valid 6 months beyond the date of arrival in India.</p>
+                        <p>3. Please check the period of stay stamped in your passport upon entry into India.</p>
+                        <p>4. Please submit the form duly filled to the organisers before the deadline as mentioned
+                            above
+                        </p>
+
+                    </div>
+
+                    <section class="example-section">
+                        <mat-checkbox class="example-margin" [disabled]="user.oem_visa" [(ngModel)]="isVisaApplicable">NOT APPLICABLE
+                        </mat-checkbox>
+                    </section>
+
+
+                    <form [formGroup]="VISA_INVITATION_LETTER" (ngSubmit)="submitVISA_INVITATION_LETTER()"
+                        *ngIf="!isVisaApplicable">
+                        <h2 class="mt-2 blue">Form Submission</h2>
+                        <div>
+                            <!-- Prefix: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 d-flex-justify-start-align-center">
+                                    <p>Prefix :</p>
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <select class="form-control" formControlName="prefix" required>
+                                        <option value="">Select</option>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Miss">Miss</option>
+                                        <option value="Ms">Ms</option>
+                                        <option value="Dr">Dr</option>
+                                        <option value="Prof">Prof</option>
+                                        <option value="Rev">Rev</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <!-- <input formControlName="prefix" type="text" class="form-control"> -->
+                                </div>
+                            </div>
+
+                            <!-- First Name: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>First Name :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="first_name" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="
+                                            VISA_INVITATION_LETTER.controls['first_name'].touched && VISA_INVITATION_LETTER.controls['first_name']?.hasError('required')
+                                            ||
+                                            visaFormSubmitted && VISA_INVITATION_LETTER.controls['first_name']?.hasError('required')
+                                            ">
+                                        First Name is required</mat-error>
+                                </div>
+                            </div>
+
+                            <!-- Middle Name: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Middle Name :</p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="middle_name" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Last Name: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Last Name :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="last_name" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['last_name'].touched && VISA_INVITATION_LETTER.controls['last_name']?.hasError('required')
+                                        || visaFormSubmitted && VISA_INVITATION_LETTER.controls['last_name']?.hasError('required')">
+                                        Last Name is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Company: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Company :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="company" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['company'].touched && VISA_INVITATION_LETTER.controls['company']?.hasError('required')
+                                        ||
+                                        visaFormSubmitted && VISA_INVITATION_LETTER.controls['company']?.hasError('required')">
+                                        Company is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Nationality: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Nationality :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="nationality" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['nationality'].touched && VISA_INVITATION_LETTER.controls['nationality']?.hasError('required') ||
+                                        visaFormSubmitted && VISA_INVITATION_LETTER.controls['nationality']?.hasError('required')">
+                                        Nationality is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Date of Birth -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Date of Birth :<span class="red">*</span> 
+                                        (DD/MM/YYYY)</p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="dob" type="date" class="form-control"
+                                    value=""  min="1997-01-01" max="2030-12-31">
+                                    
+                                      
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['dob'].touched && VISA_INVITATION_LETTER.controls['dob']?.hasError('required')
+                                        || visaFormSubmitted && VISA_INVITATION_LETTER.controls['dob']?.hasError('required')">
+                                        Date of Birth is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Address:  -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Address :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="address" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['address'].touched && VISA_INVITATION_LETTER.controls['address']?.hasError('required')
+                                        || visaFormSubmitted && VISA_INVITATION_LETTER.controls['address']?.hasError('required')">
+                                        Address is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- City : -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>City :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="city" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['city'].touched && VISA_INVITATION_LETTER.controls['city']?.hasError('required')
+                                        || visaFormSubmitted && VISA_INVITATION_LETTER.controls['city']?.hasError('required')">
+                                        City is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Pin Code : -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Pin Code :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="pin_code" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['pin_code'].touched && VISA_INVITATION_LETTER.controls['pin_code']?.hasError('required')
+                                        || visaFormSubmitted && VISA_INVITATION_LETTER.controls['pin_code']?.hasError('required')">
+                                        Pin Code is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Country : -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Country :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="country" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['country'].touched && VISA_INVITATION_LETTER.controls['country']?.hasError('required') ||
+                                        visaFormSubmitted && VISA_INVITATION_LETTER.controls['country']?.hasError('required')">
+                                        Country is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Gender  -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Gender :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <!-- <input formControlName="gender" type="text" class="form-control"> -->
+                                    <!-- html select for gender -->
+                                    <select formControlName="gender" class="form-control">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <mat-error
+                                    *ngIf="VISA_INVITATION_LETTER.controls['gender'].touched && VISA_INVITATION_LETTER.controls['gender']?.hasError('required') ||
+                                    visaFormSubmitted && VISA_INVITATION_LETTER.controls['gender']?.hasError('required')">
+                                    Gender is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Passport No -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Passport No :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="passport_number" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['passport_number'].touched && VISA_INVITATION_LETTER.controls['passport_number']?.hasError('required')
+                                        || visaFormSubmitted && VISA_INVITATION_LETTER.controls['passport_number']?.hasError('required')">
+                                        Passport No is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Place of issue of Passport No:-->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Place of issue of Passport No :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="place_of_issue_of_passport_number" type="text"
+                                        class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['place_of_issue_of_passport_number'].touched && VISA_INVITATION_LETTER.controls['place_of_issue_of_passport_number']?.hasError('required') ||
+                                        visaFormSubmitted && VISA_INVITATION_LETTER.controls['place_of_issue_of_passport_number']?.hasError('required')">
+                                        Place of issue of Passport No is required</mat-error>
+                                </div>
+                            </div>
+                            <!-- Date of issue of Passport (DD/MM/YYYY) -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Date of issue of Passport (DD/MM/YYYY):<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="date_of_issue_of_passport" 
+                                    value="" min="1997-01-01" max="2030-12-31"
+                                     type="date" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['date_of_issue_of_passport'].touched && VISA_INVITATION_LETTER.controls['date_of_issue_of_passport']?.hasError('required') ||
+                                        visaFormSubmitted && VISA_INVITATION_LETTER.controls['date_of_issue_of_passport']?.hasError('required')">
+                                        Date of issue of Passport No is required</mat-error>
+
+                                </div>
+                            </div>
+                            <!-- Date of Expiry of Passport (DD/MM/YYYY): -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Date of Expiry of Passport (DD/MM/YYYY) :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="date_of_expiry_of_passport" type="date"
+                                    value="" min="1997-01-01" max="2030-12-31"
+                                        class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['date_of_expiry_of_passport'].touched && VISA_INVITATION_LETTER.controls['date_of_expiry_of_passport']?.hasError('required') ||
+                                        visaFormSubmitted && VISA_INVITATION_LETTER.controls['date_of_expiry_of_passport']?.hasError('required')">
+                                        Date of Expiry of Passport No is required</mat-error>
+
+                                </div>
+                            </div>
+                            <!-- Embassy/Consulate address & Email id: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Embassy/Consulate address & Email id :</p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="embassy_address_email" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <!-- Job Title: -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Job Title :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="job_title" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['job_title'].touched && VISA_INVITATION_LETTER.controls['job_title']?.hasError('required')
+                                        || visaFormSubmitted && VISA_INVITATION_LETTER.controls['job_title']?.hasError('required')">
+                                        Job Title is required</mat-error>
+
+                                </div>
+                            </div>
+                            <!-- Email -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Email :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="email" type="text" class="form-control">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['email'].touched && VISA_INVITATION_LETTER.controls['email']?.hasError('required') ||
+                                        visaFormSubmitted && VISA_INVITATION_LETTER.controls['email']?.hasError('required')">
+                                        Email is required</mat-error>
+
+                                </div>
+                            </div>
+                            <!-- Mobile Number -->
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3 col-md-3 ">
+                                    <p>Mobile Number :<span class="red">*</span></p>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3">
+                                    <input formControlName="code" type="text" class="form-control"
+                                        placeholder="Select Code">
+                                    <mat-error
+                                        *ngIf="VISA_INVITATION_LETTER.controls['code'].touched && VISA_INVITATION_LETTER.controls['code']?.hasError('required') ||
+                                        visaFormSubmitted && VISA_INVITATION_LETTER.controls['code']?.hasError('required')">
+                                        Mobile Number is required<br></mat-error>
+                                    <small class="red">Please include country code but do not include '+' or '00', For
+                                        example
+                                        442087427100</small>
+                                    <input formControlName="mobile" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Upload Scanned copy of passport-->
+                            <div class="row mb-2 mt-3 ">
+                                <div class="col-12 col-sm-3 col-md-3 d-flex-justify-start-align-center">
+                                    <p>Scanned copy of first two and last two pages of the passport : </p><span class="red">*</span>
+                                </div>
+                                <div class="col-12 mt-4 col-sm-3 col-md-3">
+                                    <input accept="application/pdf" type="file" class=""
+                                        (change)="PassportSelect($event)">
+                                        <mat-error
+                                        *ngIf=" visaFormSubmitted && !passport_image">
+                                        Image is required</mat-error>
+                                    <!-- <label class="custom-file-label">Choose file...</label> -->
+                                    <br>
+                                    <small class="mr-2 ">(PDF Format Only)</small>
+
+                                </div>
+                                <!-- <div class="col-12 col-sm-2 col-md-3 mt-4 ">
+                                    <button class="btn btn-primary" type="submit"
+                                    >Upload</button>
+                                    <mat-error
+                                    *ngIf="VISA_INVITATION_LETTER.controls['file'].touched && VISA_INVITATION_LETTER.controls['file']?.hasError('required')">
+                                    Email is required</mat-error>
+                                </div> -->
+                            </div>
+
+                            <div class="g-recaptcha" data-sitekey="WEBSITEKEYHERE" data-theme="light" data-size="normal"
+                                data-image="image"></div>
+                            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="row" *ngIf="!isVisaApplicable">
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div *ngFor="let passport of passports" class="alert alert-info" role="alert">
+                                <h3 class="alert-heading">{{passport.prefix}} {{ passport.first_name }} {{
+                                    passport.middle_name }} {{ passport.last_name }}</h3>
+                                <!-- <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p> -->
+                                <hr>
+                                <p class="mb-0">
+                                    <span style="cursor: pointer;" (click)="openPassport(passport)"
+                                        class="badge badge-primary badge-pill p-2">View Passport</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="mt-2 blue">For Assistance Contact</h2>
+
+                   <!-- table -->
+                   <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+
+                        <thead>
+                            <tr class="blue">
+                                <th>Name </th>
+                                <th>Contact</th>
+                                <th>Email Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Shraddha Kalamkar</td>
+                                <td>+91 99870 26115</td>
+                                <td>shraddha@orangebeak.com</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>Anosh Piarejee</td>
+                                <td>+91 84463 02245</td>
+                                <td>anosh@orangebeak.com
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end table -->
+                   <button class="mt-2" mat-stroked-button color="primary" (click)="submitVISA_INVITATION_LETTER()">{{ user.oem_visa ? '' : 'Submit &' }} Next</button>
+                </mat-step>
+
+                <!-- 7 label="INDEMNITY/UNDERTAKING"-->
+                <mat-step state="{{
+                    user.oem_indemnity_undertaking?'edit':'number'
+                }}" completed="{{
+                    user.oem_indemnity_undertaking?'true':'false'
+                }}" label="INDEMNITY/UNDERTAKING">
+                    <form [formGroup]="INDEMNITY_UNDERTAKING" (ngSubmit)="submitINDEMNITY_UNDERTAKING()">
+                        <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+
+                        <div>
+                            <h2 class="blue">Form Submission</h2>
+                            <!-- table -->
+                            <div class="col-12 row ">
+                                <div class="col-12 border">
+                                    <p class="mt-2">
+                                        Dear Sir/Madam,<br> I/We the undersigned, hereby declare that I/We have read and
+                                        understood the Rules and Regulations of participation in the Exhibitor Contract
+                                        and
+                                        that I/We agree to abide by the said Rules and Regulations
+                                        without reservation.
+                                        <br> I/We further declare that I/We indemnify Boiler India against payment of
+                                        taxes,
+                                        penalties, charges, levies, octroi, cess import duties, etc. or any other
+                                        statutory
+                                        payments which Boiler India may be called upon
+                                        to pay on my/our behalf now or in the near future.
+                                    </p>
+
+                                    <mat-checkbox [disabled]="user.oem_indemnity_undertaking" class="example-margin" formControlName="indemnity_undertaking">I
+                                        Accept
+                                    </mat-checkbox>
+                                    <br>
+                                    <!-- button -->
+                                    <!-- <button class="btn btn-primary mb-2">Submit</button> -->
+
+                                </div>
+                            </div>
+
+                            <h2 class="mt-2 blue">For Assistance Contact</h2>
+                            <!-- person -->
+                              <!-- table -->
+                              <div class="table-responsive">
+                                <table class="table table-bordered text-center">
+
+                                    <thead>
+                                        <tr class="blue">
+                                            <th>Name </th>
+                                            <th>Contact</th>
+                                            <th>Email Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Shraddha Kalamkar</td>
+                                            <td>+91 99870 26115</td>
+                                            <td>shraddha@orangebeak.com</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Anosh Piarejee</td>
+                                            <td>+91 84463 02245</td>
+                                            <td>anosh@orangebeak.com
+                                            </td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end table -->
+                        </div>
+                        
+                        <button type="button" class="mt-2 mr-1" mat-stroked-button color="primary"
+                            (click)="submitINDEMNITY_UNDERTAKING()">{{ user.oem_indemnity_undertaking ? '' : 'Submit &' }} Next</button>
+                        <!-- <button type="button" class="mt-2 mr-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+                    </form>
+                </mat-step>
+
+                <!-- 9 label="HEALTH UNDERTAKING"-->
+                <mat-step state="{{
+                    user.oem_health_undertaking?'edit':'number'
+                }}" completed="{{
+                    user.oem_health_undertaking?'true':'false'
+                }}" label="HEALTH UNDERTAKING">
+                    <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+                    <h2 class="mt-2 blue">Form Submission</h2>
+                    <!-- form -->
+                    <!-- <div class="d-flex justify-content-end p-2">
+                        <button class="btn btn-outline-primary"
+                            (click)="print_health_undertaking_section()">Print</button>
+                    </div> -->
+                    <section #health_undertaking_section id="health_undertaking_section">
+                        <form [formGroup]="HEALTH_UNDERTAKING">
+
+
+                            <!-- list item -->
+
+                            <mat-list role="list">
+                                <mat-list-item role="listitem">I &nbsp; <span contenteditable="!user.oem_health_undertaking">{{
+                                        user.company_repName }}</span> &nbsp; resident of &nbsp; <span
+                                        contenteditable="!user.oem_health_undertaking">{{ user.city }}</span> &nbsp; ,do hereby, declare the
+                                    following:</mat-list-item>
+
+                                <mat-list-item role="listitem">1. That, I have read the Instructions, Guidelines, and
+                                    relevant orders about COVID-19
+                                    pandemic. I have read Information Bulletin, Instructions, and Notices related to the
+                                    covid-19 appropriate behaviour at the venue.</mat-list-item>
+                                <br>
+                                <mat-list-item role="listitem">
+                                    2. I have in the last 14 days experienced (please tick, wherever it applies to you,
+                                    otherwise
+                                    leave blank):
+                                </mat-list-item>
+
+                                <mat-list-item role="listitem" class="ml-3">
+                                    The following flu-like symptoms:
+                                </mat-list-item>
+                                <mat-list-item role="listitem" class="ml-3">
+
+                                    Fever:&nbsp; <input type="checkbox" formControlName="fever">&nbsp; Cough:&nbsp;
+                                    <input type="checkbox" formControlName="cough">&nbsp; Breathlessness:&nbsp;<input
+                                        type="checkbox" formControlName="breathlessness">&nbsp; Sore Throat:&nbsp;<input
+                                        type="checkbox" formControlName="sore_throat_running_nose">&nbsp;Running
+                                    Nose:&nbsp;
+                                    <input type="checkbox" formControlName="sore_throat_running_nose"> &nbsp;Body
+                                    ache:&nbsp; <input type="checkbox" formControlName="body_ache">
+                                </mat-list-item>
+
+                                <mat-list-item role="listitem" class="ml-3">
+                                    <p class="mr-2"> Others- Please specify:&nbsp; <span contenteditable="!user.oem_health_undertaking"
+                                            (keyup)="checkcontent($event)">
+                                            {{ HEALTH_UNDERTAKING.value.other_symptom }}</span></p>
+                                </mat-list-item>
+
+                                <mat-list-item role="listitem">
+                                    3. I have in the last 14 days,
+                                </mat-list-item>
+
+                                <mat-list-item role="listitem" class="ml-3">
+                                    <p>a) <input type="checkbox" formControlName="option_a"> been in close contact with
+                                        a confirmed case of the COVID-19. (
+                                        'Close contact' means being at less than one meter for more than 15 minutes)
+                                    </p>
+
+                                </mat-list-item>
+
+
+                                <mat-list-item role="listitem" class="ml-3">
+                                    <p>b) <input type="checkbox" formControlName="option_b"> not been in close contact
+                                        with a person suffering from COVID-19
+                                        and am NOT under mandatory quarantine.
+                                    </p>
+                                </mat-list-item>
+
+
+                                <mat-list-item role="listitem">
+                                    <p> 4. I/ we have read the detailed guidelines <span class="blue"><a
+                                                href="https://arogya.maharashtra.gov.in/1175/Novel--Corona-Virus">https://arogya.maharashtra.gov.in/1175/Novel--Corona-Virus</a>
+                                        </span> and I/
+                                        we undertake to abide by the same.</p>
+                                </mat-list-item>
+
+
+                            </mat-list>
+
+
+                            <!-- Upload Final Vaccination Certificate  -->
+                            <!-- <p>Upload Final Vaccination Certificate :</p>
+                            <div class="row mb-2">
+                                <div class="col-12 col-sm-3">
+
+                                    <input type="file" class="" required (change)="vaccineFileChange($event)">
+                                    <mat-error *ngIf="healthFomSubmitted && !file">Certificate is required</mat-error>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3 ">
+                                    <button class="btn " style="background-color: #0DADF1; color: white;" (click)="uploadVaccine()">Upload</button>
+                                </div>
+                                <div class="col-12 col-sm-3 col-md-3 ">
+                                    <a target="_blank" href="{{ user?.vaccine_certificate }}" class="btn" style="background-color: #0DADF1; color: white;"
+                                        *ngIf="user.vaccine_certificate">View Uploaded</a>
+                                </div>
+                                <div class="col-12 col-sm-12">
+                                    <app-progress *ngIf="uploadStart" class="m-2" [title]="'Uploaded'"
+                                        [value]="progress">
+                                    </app-progress>
+                                </div>
+                            </div> -->
+
+                            <mat-checkbox  type="checkbox" formControlName="health_undertaking_accepted">
+                                I Accept
+                            </mat-checkbox>
+
+                        </form>
+                    </section>
+                    <br><br>
+                    <h2 class="mt-2 blue">For Assistance Contact</h2>
+                    <!-- person -->
+                        <!-- table -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+
+                                <thead>
+                                    <tr class="blue">
+                                        <th>Name </th>
+                                        <th>Contact</th>
+                                        <th>Email Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Shraddha Kalamkar</td>
+                                        <td>+91 99870 26115</td>
+                                        <td>shraddha@orangebeak.com</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Anosh Piarejee</td>
+                                        <td>+91 84463 02245</td>
+                                        <td>anosh@orangebeak.com
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table -->
+
+                    
+                    <button class="mt-2 mr-1" mat-stroked-button color="primary"
+                        (click)="submitHEALTH_UNDERTAKING_FORM()">{{ user.oem_health_undertaking? '' : 'Submit &' }} Next</button>
+                    <!-- <button class="mt-2 mr-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+                </mat-step>
+
+                <!-- 14 label="PARTICIPATION LETTER"-->
+
+                <mat-step state="{{
+                    user.oem_participation?'edit':'number'
+                }}" completed="{{
+                    user.oem_participation?'true':'false'
+                }}" label="PARTICIPATION LETTER">
+
+                    <!-- <h4 class="red">Submission Deadline: 05-02-2022</h4> -->
+
+                    <div class="d-flex justify-content-end p-2">
+                        <button class="btn btn-outline-primary" (click)="print_participation_form()">Print</button>
+                    </div>
+                    <div #print_participation_section >
+                        <!-- style="background-image: url('../../../assets/latter.png');" -->
+                    
+                            <h2 style="color: #28509D; text-align: center;" class="mt-2"><u>To whom-so-ever it may
+                                    concern</u></h2>
+                            <h2 style="color: #28509D; text-align: center; text-transform: uppercase;" class="mb-2">
+                                <u>Certificate Of participation</u>
+                            </h2>
+                            <!-- 
+                        <div class="mb-3 mt-5">  
+                            <p>We, hereby certify that <span
+                                    contenteditable="true">{{PARTICIPATION_FORM.value.company_name}}</span> is an exhibitor
+                                at BOILER INDIA 2022 occupying <span
+                                    contenteditable="false">{{PARTICIPATION_FORM.getRawValue().stall_number}}</span>,
+                                <span contenteditable="false">{{PARTICIPATION_FORM.value.stall_size}}</span> AND <span
+                                    contenteditable="false">{{PARTICIPATION_FORM.value.stall_dimension}}</span>
+                            </p>
+                            <p>The event is organized with support from the Directorate of Steam Boilers, Maharashtra State,
+                                Labour Department, HEI Division, Department of Heavy Industry, Ministry of Heavy Industries,
+                                Government of India, Ministry of Micro,
+                                Small and Medium Enterprises, Government of India, Council of Scientific and Industrial
+                                Research (CSIR), Government of India at CIDCO exhibition and convention centre between March
+                                1-3, 2022.</p>
+                            <p> The event is being organized with the sole purpose of exhibiting and networking and no sale
+                                is permissible at the venue. </p>
+                            <p>We are glad to have <span
+                                    contenteditable="true">{{PARTICIPATION_FORM.value.company_name}}</span> as one of our
+                                exhibitors and hereby extend our warm invitation to attend this event.</p>
+                            <p>With best regards! </p>
+                        </div> -->
+
+                            <div class="my-4">
+                                <p style="font-size: 15px;">
+                                    BOILER INDIA 2022 is being organized by Orangebeak Technologies Pvt. Ltd with support from the Directorate of Steam Boilers, MS, Ministry of Heavy Industries, GoI, Ministry of MSME, GoI, Labour Department, GoM, Council of Scientific and Industrial Research, GoI and Indian Drug Manufacturers' Association at CIDCO Exhibition and Convention Centre, Vashi, Navi Mumbai during 14/09/2022 - 16/09/2022.
+
+                                   
+                                    <!-- BOILER INDIA 2022 is being organized by Orangebeak Technologies Pvt. Ltd with
+                                    support from the Directorate of Steam Boilers, MS, Ministry of Heavy
+                                    Industries, GoI, MSME Ministry, GoI, Labour Dept., GoM, CSIR, GoI and IDMA at CIDCO
+                                    Exhibition Centre, Vashi, Navi Mumbai during 14/09/2022 - 16/09/2022 -->
+                                        <!-- &nbsp;
+                                        <span contenteditable="true">dd/mm/yyy</span>&nbsp; to &nbsp;<span
+                                            contenteditable="true">dd/mm/yyy</span> -->
+                                </p>
+                                <p style="font-size: 15px;" class="mt-3">
+                                    This is to certify that the following company/firm is a bonafide
+                                     ‘Exhibitor’ at BOILER INDIA 2022 exhibition.</p>
+                                <p style="font-weight: 500; font-size: 15px;" class="mt-3"> {{user.company_name}}</p>
+                                <p style="font-weight: 500; font-size: 15px;">{{myStall}}</p>
+                                
+                                <p style="font-weight: 500; font-size: 15px;">{{user.address_line1}},</p>
+                                <p style="font-weight: 500; font-size: 15px;">{{user.address_line1}},&nbsp;{{user.city}},</p>
+                                <p style="font-weight: 500; font-size: 15px;">{{user.state}}&nbsp;{{user.country}},</p>
+                                <p style="font-weight: 500; font-size: 15px;">{{user.post_code}}.</p>
+                                <p style="font-size: 15px;" class="mt-5">We are glad to have you as one of our exhibitors and hereby extend our warm invitation to you
+                                    to attend this grand event.</p>
+                                    <p style="font-size: 15px;" class="mt-4">With best regards!
+                                    </p>
+                                    
+                                    <p style="font-weight: 500; font-size: 15px;" class="mt-5">
+                                        <img width="200" height="50" src="../../../assets/sugandha_signature.jpeg">
+                                        <br>
+                                        Sugandha Rohatgi
+                                    </p>
+                                    <p style="font-size: 15px;">Head- Events and Activations </p>
+                                    <p style="font-size: 15px;">BOILER INDIA 2022</p>
+                                    <p style="font-size: 15px;">Orangebeak Technologies Pvt. Ltd</p>
+                                    <p style="font-size: 15px;">+91 9028520149</p>
+                                    <p style="font-size: 15px;">sugandha@orangebeak.com</p>
+                            </div>
+ 
+                    </div>
+
+
+                    
+                    <!-- <button class="mt-2 mr-1" mat-stroked-button color="primary"
+                        (click)="submitPARTICIPATION_FORM()">Save</button> -->
+                    <!-- <button class="mt-2 mr-1" mat-stroked-button color="primary" matStepperNext>Submit & Next</button> -->
+
+
+                    <div class="mt-5">
+                        <div *ngIf="user?.stall.length" class="progress">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{'width': oemProgress + '%' }"
+                                aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <h4 *ngIf="user?.stall.length">{{oemProgress}}%</h4>
+
+                        <h3>Thank you for completing the Online Exhibitor Manual. See you during BOILER INDIA 2022.
+                        </h3>
+                        <h3>Let us know if you need any assistance.
+                        </h3>
+                        <!-- <button mat-flat-button color="primary">Preview your
+                            submission</button>
+                        <button mat-flat-button color="primary" class="mx-4">Close</button> -->
+                        <!-- person details -->
+                        <h1 class="mt-2 blue">For Assistance Contact</h1>
+                     
+                            <!-- PErson A -->
+                            <!-- <div class="col-12 col-sm-6"> -->
+                                  <!-- table -->
+                                  <div class="table-responsive">
+                                    <table class="table table-bordered text-center">
+
+                                        <thead>
+                                            <tr class="blue">
+                                                <th>Name </th>
+                                                <th>Contact</th>
+                                                <th>Email Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Shraddha Kalamkar</td>
+                                                <td>+91 99870 26115</td>
+                                                <td>shraddha@orangebeak.com</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>Anosh Piarejee</td>
+                                                <td>+91 84463 02245</td>
+                                                <td>anosh@orangebeak.com
+                                                </td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                <!-- </div> -->
+                                <!-- end table -->
+                            </div>
+                            <!-- BlankSpace -->
+                            <!-- <div class="col-12 col-sm-3"></div> -->
+                        
+                    </div>
+                </mat-step>
+                <!-- <mat-step label="DONE"> -->
+                <!-- <ng-template matStepLabel>Done</ng-template> -->
+                <!-- <p>You are now done.</p> -->
+                <!-- <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                    </div> -->
+                <!-- </mat-step> -->
+
+                <!-- Icon overrides. -->
+                <ng-template matStepperIcon="phone">
+                    <mat-icon>call_end</mat-icon>
+                </ng-template>
+                <ng-template matStepperIcon="chat">
+                    <mat-icon>forum</mat-icon>
+                </ng-template>
+                <ng-template matStepperIcon="done">
+                    <mat-icon>check</mat-icon>
+                </ng-template>
+                <ng-template matStepperIcon="edit">
+                    <mat-icon>edit</mat-icon>
+                  </ng-template>
+
+            </mat-stepper>
+        </div>
+    </div>
+</div>
+

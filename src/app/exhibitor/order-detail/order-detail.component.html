@@ -1,0 +1,24 @@
+<div *ngIf="order" class="table-responsive">
+    <table class="table table-borderless">
+        <thead style="color: white; background-color: #0DADF1;">
+            <tr>
+                <!-- <th>Image</th> -->
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of order.orderItems">
+                <!-- <td>
+                    {{ item.product_id }}
+                </td> -->
+                <td>
+                    {{ item?.product_name }}
+                </td>
+                <td>
+                    {{ item?.product_price }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

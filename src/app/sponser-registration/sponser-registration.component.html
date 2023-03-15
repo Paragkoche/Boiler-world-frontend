@@ -1,0 +1,106 @@
+
+<div class="body">
+    <div class="containar">
+        <div class="toolbar">
+                <span>SPONSER REGISTRATION FORM</span>
+        </div>
+        <form class="main" [formGroup]="sponserForm" (ngSubmit)="register()">
+            <div class="row">
+                
+                <div class="col-sm-6">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Company Name</mat-label>
+                        <input type="text" matInput required formControlName="company_name">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Name</mat-label>
+                        <input type="text" matInput required formControlName="name">
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Designation</mat-label>
+                        <input type="number" matInput required formControlName="designation">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Contact Number</mat-label>
+                        <input type="number" matInput required formControlName="mobile_no">
+                    </mat-form-field>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Email Address</mat-label>
+                        <input type="email" matInput required formControlName="email">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Company Website</mat-label>
+                        <input type="number" matInput required formControlName="company_website">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <mat-form-field class="w-100"  appearance="fill">
+                        <mat-label>Select category</mat-label>
+                        <mat-select>
+                            <mat-option value="Sponsor">Sponsor</mat-option>
+                            <!-- <mat-option value="two">Second option</mat-option> -->
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field class="w-100"  appearance="fill">
+                        <mat-label>Select type of sponsorship</mat-label>
+                        <mat-select>
+                            <mat-option value="TitleSponsorship">Title Sponsorship</mat-option>
+                            <mat-option value="AssociateSponsorship">Associate Sponsorship</mat-option>
+                            <mat-option value="ExhibitorKitSponsorship">Exhibitor Kit Sponsorship</mat-option>
+                            <mat-option value="ExhibitorGiftSponsorship">Exhibitor Gift Sponsorship</mat-option>
+                            <mat-option value="CafetariaSponsorship">Cafetaria Sponsorship</mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+             
+            </div>
+            <div class="row">
+                
+                    <div class="col-sm-6">
+                        <mat-form-field class="w-100"  appearance="fill" color="primary">
+                            <mat-label>Password</mat-label>
+                            <input type="password" matInput formControlName="password" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-6">
+                        <mat-form-field class="w-100"  appearance="fill" color="primary">
+                            <mat-label>Confirm Password</mat-label>
+                            <input type="password" matInput formControlName="password" required>
+                        </mat-form-field>
+                    </div>
+                   
+            
+                
+            </div>
+
+            <div class="button">
+                <button mat-raised-button style="background-color: #28509D; color: #FFFFFF ; margin-right: 20px;" >Register</button>
+                <button mat-button style="background-color: #C20F19; color: #FFFFFF">Reset</button>
+            </div>
+
+        </form>
+    </div>
+</div>

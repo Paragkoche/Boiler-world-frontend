@@ -1,0 +1,119 @@
+<mat-sidenav-container class="main-container">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="drawer-container">
+        <mat-list>
+            <div class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor/profile')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>person</mat-icon>
+                    <div mat-line>Profile</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>event</mat-icon>
+                    <div mat-line>Event</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>people</mat-icon>
+                    <div mat-line>Seminar</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+            <div *ngIf="!user.stall_pref.length" class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor/stall-preference')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>reorder</mat-icon>
+                    <div mat-line>Stall Preference</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+            <div *ngIf="user.stall_pref.length" class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor/stall-preference')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>reorder</mat-icon>
+                    <div mat-line>My Stall</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>photo</mat-icon>
+                    <div mat-line>Gallery</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>person</mat-icon>
+                    <div mat-line>Exhibitor</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>person</mat-icon>
+                    <div mat-line>Partner</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>person</mat-icon>
+                    <div mat-line>Sponser</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="item-container">
+                <a target="_blank" href="https://www.boilerworldexpo.com/boiler-india-2022-vendors/">
+                    <mat-list-item routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                        <mat-icon mat-list-icon>person</mat-icon>
+                        <div mat-line>Vendor</div>
+                    </mat-list-item>
+                </a>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="item-container">
+                <mat-list-item (click)="navigateToPage('/exhibitor/become-a-sponser')" routerLinkActive="active-list-item"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon mat-list-icon>person_add</mat-icon>
+                    <div mat-line>Become a Sponser</div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+        </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="content-container">
+
+        <!-- Toolbar START-->
+        <mat-toolbar class="toolbar sticky-top" color="primary">
+            <button mat-icon-button class="example-icon" (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="title-toolbar-class">
+                <img class="img-thumbnail" src="../../assets/Boiler_India.png" >
+            </span>
+            <span class="example-spacer"></span>
+            <span class="right-hand-toolbar-div">
+                <!-- <span class="credit-span">Avl Credits: {{ credits }}</span> -->
+                <button mat-raised-button color="warn" (click)="logout()">Logout, {{user.company_repName}}</button>
+            </span>
+        </mat-toolbar>
+        <!-- Toolbar END -->
+
+        <app-progress *ngIf="user.is_confirmed" title="Profile Completion" [value]="user.profile_completion"></app-progress>
+        <div class="p-10">
+            <router-outlet class=""></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

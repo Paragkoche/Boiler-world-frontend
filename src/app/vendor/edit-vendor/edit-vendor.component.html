@@ -1,0 +1,79 @@
+<div class="background m-2 rounded-3">
+    
+  <div *ngIf="loading" class="bg-loading position-absolute h-100 w-100 d-flex justify-content-center align-items-center" style="left: 0; top: 0; z-index: 1000;">
+    <img style="width: 100px; height: 100px;" src="../../assets/loading-buffering.gif">
+  </div>
+
+    <div class="d-flex align-items-center mb-2">
+      <button routerLink="/vendor/product-list" mat-icon-button
+          aria-label="Example icon button with a vertical three dot icon">
+          <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1 class="m-0" style="font-size: 20px">Edit Product</h1>
+  </div>
+
+    <form [formGroup]="productForm" (ngSubmit)="update()">
+
+    <div class="row">
+        <div class="col-12 col-sm-6">
+           
+            <div class="col-12">
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Product Name</mat-label>
+                  <input matInput placeholder="Product Name" formControlName="name">
+                  <!-- <mat-icon matSuffix>search</mat-icon> -->
+                </mat-form-field>
+            </div>
+            <div class="col-12">
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Product Price</mat-label>
+                  <input matInput placeholder="Product Price" type="number" formControlName="price">
+                  <!-- <mat-icon matSuffix>search</mat-icon> -->
+                </mat-form-field>
+            </div>
+            <div class="col-12">    
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Product Description</mat-label>
+                  <!-- <textarea matInput></textarea> -->
+                  <input matInput placeholder="Product Description" formControlName="description">
+                  <!-- <mat-icon matSuffix>search</mat-icon> -->
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-3 col-sm-6 ">
+            <img *ngIf="!selectedImagePreview" src="{{selectedImagePreview || productForm.value.image}}"alt="uploaded img" class="image d-flex justify-content-right" style="max-height: 300;">
+            <img *ngIf="selectedImagePreview" src="{{selectedImagePreview || productForm.value.image}}" alt="upload img" class="image d-flex justify-content-right">
+            
+            <input style="display: none" type="file" (change)="onFileChanged($event)"
+            #fileInput>
+
+            
+            <button mat-flat-button class="mt-2" (click)="fileInput.click()" color="primary" type="button">
+                <mat-icon matSuffix>add_a_photo</mat-icon>
+               Change Image
+            </button>
+        </div>
+    </div>
+
+    <div class=" col-12 col-sm-12 button text-center mt-3">
+        <!-- edit -->
+        <button type="button" class="mr-5" *ngIf="readonly" (click)="confirmEdit()" mat-raised-button
+          style="background-color: #2B8797; color: #FFFFFF;">
+          Edit
+        </button>
+        <!-- update -->
+        <button type="submit" class="mr-5" *ngIf="!readonly" [disabled]="loading" mat-raised-button
+        style="background-color: #319447; color: #FFFFFF; margin-right: 10px;">
+        Update
+      </button>
+        <button type="button" class="ml-5" *ngIf="!readonly" (click)="this.productForm.disable(); readonly = !readonly"
+          mat-raised-button style="background-color: #C20F19; color: #FFFFFF">Cancel</button>
+      </div>
+</form>
+    <!-- <div class="example-button-row d-flex justify-content-center mt-5">
+        <button mat-flat-button color="primary" (click)="submitproductForm()">Add</button>
+    </div> -->
+
+</div>
+

@@ -1,0 +1,123 @@
+
+<div class="body">
+    <div class="containar">
+        <div class="toolbar">
+                <span>VENDOR REGISTRATION FORM</span>
+        </div>
+        <form class="main" [formGroup]="vendorForm" (ngSubmit)="register()">
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100" appearance="fill" color="primary">
+                        <mat-label>Company Respresentative Name</mat-label>
+                        <input type="text" matInput required formControlName="company_repName">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Company Name</mat-label>
+                        <input type="text" matInput required formControlName="company_name">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Company Website</mat-label>
+                        <input type="text" matInput formControlName="company_website">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Email Address</mat-label>
+                        <input type="email" matInput required formControlName="email">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100" appearance="fill" color="primary">
+                        <mat-label>Mobile Number</mat-label>
+                        <input type="number" matInput required formControlName="mobile_no">
+                    </mat-form-field>
+                </div>
+                
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Regd. office address</mat-label>
+                        <input type="number" matInput required formControlName="Regdofficeaddress">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill">
+                        <mat-label>Vendor</mat-label>
+                        <mat-select>
+                            <mat-option value="Vendor">Vendor</mat-option>
+                            <!-- <mat-option value="two">Second option</mat-option> -->
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill">
+                        <mat-label>Select vendor category</mat-label>
+                        <mat-select>
+                            <mat-option value="Visa&Travel assistance">Visa & Travel assistance</mat-option>
+                            <mat-option value="Hotels">Hotels</mat-option>
+                            <mat-option value="CabServices">Cab services</mat-option>
+                            <mat-option value="StallFabrication">Stall Fabrication</mat-option>
+                            <mat-option value="Furniture&Fixtures">Furniture & Fixtures</mat-option>
+                            <mat-option value="Clearing&Forwarding">Clearing & Forwarding</mat-option>
+                            <mat-option value="WarehousingServices">Warehousing Services</mat-option>
+                            <mat-option value="Logistics">Logistics</mat-option>
+                            <mat-option value="PrintingServices">Printing Services</mat-option>
+                            <mat-option value="BusinessServices">Business Services</mat-option>
+                            <!-- <mat-option value="Logistics">Logistics</mat-option> -->
+
+
+
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Password</mat-label>
+                        <input type="password" matInput formControlName="password" 
+                        [type]="view ? 'password' : 'text'">
+                        <mat-icon matSuffix (click)="view = !view">{{ view ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Confirm Password</mat-label>
+                        <input type="password" matInput formControlName="password" 
+                        [type]="hide ? 'password': 'text'">
+                        <mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+                    </mat-form-field>
+                </div>
+                
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Update company profile </mat-label>
+                        <input type="text" matInput required formControlName="Updatecompanyprofile">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                    <mat-form-field class="w-100"  appearance="fill" color="primary">
+                        <mat-label>Update company logo </mat-label>
+                        <input type="text" matInput required formControlName="Updatecompanylogo">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="button">
+                <button mat-raised-button style="background-color: #28509D; color: #FFFFFF ; margin-right: 20px;" >Register</button>
+                <button mat-button style="background-color: #C20F19; color: #FFFFFF">Reset</button>
+            </div>
+
+        </form>
+    </div>
+</div>

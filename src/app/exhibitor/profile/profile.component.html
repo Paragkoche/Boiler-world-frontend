@@ -1,0 +1,191 @@
+<div class="container-fluid"
+style="
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #e5e5e5;
+">
+    <div class="row mb-2">
+        <div class="col-12 col-sm-8" style="display: grid;">
+            <div class="ml-1">
+                    <div class="card shadow rounded" style="height: 100%; width: 100%;">
+                        <div class="card-body text-center">
+                            <h2 class="card-title text-left">OEM Progress</h2>
+                            <!-- <div class="progress">
+                                <div class="progress-bar"  role="progressbar"   [ngStyle]="{'width': oemProgress + '%' }" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">{{oemProgress}}%</div>
+                            </div> -->
+                            <div *ngIf="!user?.stall.length" class="alert alert-info text-left" role="alert">
+                                <!-- <h3 class="alert-heading">Stall is yet to confirm!</h3> -->
+                                <h3 class="alert-heading">Please wait untill your stall is confirm.</h3>
+                                <!-- <p>Please wait untill your stall is confirm.</p> -->
+                            </div>
+                            <div *ngIf="user?.stall.length" class="progress">
+                                <div class="progress-bar"  role="progressbar"   [ngStyle]="{'width': oemProgress + '%' }" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
+                                    <!-- {{oemProgress}}% -->
+                                </div>
+                            </div>
+                            <h2 *ngIf="user?.stall.length" class="card-title text-left">{{oemProgress}}%</h2>
+                            <!-- <circle-progress *ngIf="user?.stall.length" class="circle-progress" [percent]="oemProgress" [radius]="100" [outerStrokeWidth]="16"
+                                [innerStrokeWidth]="16" [outerStrokeColor]="'#4882c2'" [innerStrokeColor]="'#e7e8ea'"
+                                [animation]="true" [animationDuration]="300"></circle-progress> -->
+                        </div>
+                        <div *ngIf="user?.stall.length" class="card-footer bg-transparent">
+                            <a class="card-link fs-1" routerLink="/exhibitor/oem">Submit OEM</a>
+                        </div>
+                    </div>
+            </div>
+            <div class=" ml-1 mt-3">
+                <div class="card shadow rounded" style="height: 100%; width: 100%;">
+                    <!-- Stall is confirmed -->
+                    <div *ngIf="user?.stall.length" class="card-body">
+                        <h2 class="card-title">My Stall</h2>
+                        
+                        <div *ngFor="let stall of user?.stall" class="alert alert-info" role="alert">
+                            <h3 class="alert-heading">{{ stall.stall_no }} - {{ stall.area }} sq mtr</h3>
+                        </div>
+                    </div>
+                    <!-- Stall Prefernce submitted -->
+                    <div *ngIf="!user?.stall.length" class="card-body">
+                        <h2 class="card-title">My Submitted Stall</h2>
+                        <div *ngIf="user?.stall_pref.length" class="alert alert-info" role="alert">
+                            <h3 class="alert-heading">Stall Preference Submitted!</h3>
+                            <p>We received your stall preference. Please stay updated to know latest updates</p>
+                        </div>
+                        <div *ngIf="!user?.stall_pref.length" class="alert alert-warning" role="alert">
+                            <h3 class="alert-heading">Stall Preference not Submitted!</h3>
+                            <p>Please submit your stall preferences</p>
+                        </div>
+                    </div>
+                    <!-- Stall Preference not submitted -->
+                    <div class="card-footer bg-transparent">
+                        <!-- <a *ngIf="user?.stall.length" class="card-link">View Stall</a> -->
+                        <a *ngIf="!user?.stall.length && !user?.stall_pref.length" routerLink="/exhibitor/stall-preference"
+                            class="card-link">Submit Stall</a>
+                        <a *ngIf="!user?.stall.length && user?.stall_pref.length" routerLink="/exhibitor/stall-preference" class="card-link">View
+                            Submited Stall</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="card shadow rounded">
+                <div class="card-body">
+                    <h2 class="card-title">Company Profile</h2>
+                    <div class="row justify-content-center">
+                        <div class="d-flex flex-column justify-content-center align-items-center pl-5 pr-5">
+                            <a *ngIf="user?.company_logo" target="_blank" href="{{user.company_logo}}">
+                                <img class="img-fluid" src="{{user?.company_logo}}" alt="profileImg">
+                            </a>
+                            <input id="singleFile" type="file" (change)="companyLogo($event)" />
+
+                            <label *ngIf="!user?.company_logo" for="singleFile"
+                                class="btn btn-primary company-logo">Select
+                                Company Logo
+                            </label>
+                            <label matTooltip="Edit Company Logo" *ngIf="user?.company_logo" for="singleFile"
+                                class="ml-1 mt-1">
+                              
+                                <i style="font-size: 24px;" class='bx bx-pencil'></i>
+                            </label>
+                            <br>
+                            <button *ngIf="file" mat-raised-button color="primary"
+                                (click)="companyLogoUpload()">Upload</button>
+                        </div>
+                        <!-- <div class="ml-2 mr-2 w-100">
+                            <app-progress *ngIf="loading"></app-progress>
+                            <form class="text-center example-form" [formGroup]="companyForm" (ngSubmit)="update()">
+                                <mat-form-field hintLabel="Max 1000 characters" class="w-100 example-full-width"
+                                    appearance="outline">
+                                    <mat-label>Company Profile</mat-label>
+                                    <textarea #input maxlength="1000" rows="10" matInput
+                                     formControlName="company_profile"></textarea>
+                                    <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
+                                    <mat-error
+                                        *ngIf="submited && companyForm.touched && companyForm.controls['company_profile']?.hasError('required')">
+                                        Please
+                                        provide a valid
+                                        Company Representative Name
+                                    </mat-error>
+                                </mat-form-field>
+                                <button [disabled]="loading" class="btn btn-primary" style="width: 60%;" >Submit</button>
+                            </form>
+                        </div> -->
+                        <!-- <label for="singleFile">Upload Company Logo</label> -->
+
+
+                     
+                        <!-- <div for="singleFile" [fileUploadInputFor]="fileUploadQueue" class="upload-drop-zone">
+                    <label for="singleFile">Just drag and drop files here or click to upload</label>
+                </div> -->
+                        <app-progress *ngIf="uploadStart" class="m-2" [title]="'Uploaded'" [value]="progress">
+                        </app-progress>
+
+                        <!-- <mat-file-upload-queue #fileUploadQueue [fileAlias]="'file'"
+                    [httpRequestHeaders]='header'
+                    [httpUrl]="'http://localhost:3000/api/exhibitor/uploadLogo'">
+            
+                    <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index">
+                    </mat-file-upload>
+                </mat-file-upload-queue> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ml-1 mr-1">
+        <div class="card shadow rounded" style="height: 100%; width: 100%;">
+        
+            <div class="card-body">
+                <h2 class="card-title">My Orders</h2>
+                <div *ngIf="!user?.stall.length" class="alert alert-info text-left" role="alert">
+                    <!-- <h3 class="alert-heading">Stall is yet to confirm!</h3> -->
+                    <h3 class="alert-heading">Please wait untill your stall is confirm.</h3>
+                    <!-- <p>Please wait untill your stall is confirm.</p> -->
+                </div>
+                <div *ngIf="user?.stall.length && !orders?.length" class="alert alert-warning" role="alert">
+                    <h3 class="alert-heading">No Order found!</h3>
+                    <p>Please submit order in OEM Forms.</p>
+                </div>
+    
+                <div *ngIf="orders?.length" class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead style="color: white; background-color: #6CA9F0; ">
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Vendor</th>
+                                <th>Order Date</th>
+                                <th>Order Status</th>
+                                <th>View Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let order of orders">
+                                <td>
+                                    {{ order.id }}
+                                </td>
+                                <td>
+                                    {{ order?.vendor.company_name }}
+                                </td>
+                                <td>
+                                    {{ order.createdAt | date }}
+                                </td>
+                                <td>
+                                    <!-- Order status with badges color -->
+                                    <!-- <span class="badge badge-pill badge-{{ order.status.toLowerCase() }}">
+                                        {{ order.status }}
+                                    </span> -->
+                                    <button type="button" class="btn btn-outline-primary btn-rounded" >{{ order.status }}</button>
+
+                                </td>   
+                                
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary w-100"  (click)="showOrderDetial(order.id)">View</button>
+                                    <!-- <mat-icon (click)="showOrderDetial(order.id)">remove_red_eye</mat-icon> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

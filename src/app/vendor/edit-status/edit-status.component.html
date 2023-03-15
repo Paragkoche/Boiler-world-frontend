@@ -1,0 +1,28 @@
+<p>edit-status works!</p>
+<div class="background m-2">
+
+    <form class="patient-form" [formGroup]="statusForm" (ngSubmit)="update()">
+    <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <input matInput placeholder="Status" formControlName="status">
+        <mat-error>Enter Name</mat-error>
+      </mat-form-field>
+
+      <div class=" col-12 col-sm-12 button text-center">
+        <!-- edit -->
+        <button type="button" class="mr-5" *ngIf="readonly" (click)="confirmEdit()" mat-raised-button
+          style="background-color: #2B8797; color: #FFFFFF;">
+          Edit
+        </button>
+        <!-- update -->
+        <button type="submit" class="mr-5" *ngIf="!readonly" [disabled]="!loading" mat-raised-button
+        style="background-color: #319447; color: #FFFFFF; margin-right: 10px;">
+        Update
+      </button>
+        <button type="button" class="ml-5" *ngIf="!readonly" (click)="this.orderForm.disable(); readonly = !readonly"
+          mat-raised-button style="background-color: #C20F19; color: #FFFFFF">Cancel</button>
+      </div>
+
+    </form>
+
+</div>
